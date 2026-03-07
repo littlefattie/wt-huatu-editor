@@ -1,0 +1,54 @@
+# This is an example showing how the keyword `zip` or `cross` will act when designing **lineseg** series.
+
+# 这是文档中的示例，展示当给定起始和终止端点的点序列之后，不同的关键字`zip`,或`cross`构建出的**线段序列**会有何不同。
+
+
+vars:
+  w: 110
+  h: 320
+points:
+  pTop: 0,0;
+shapes:
+  ln1: line; pTop; -w, h;
+  ln2: line; pTop;  w, h;
+
+pointSeries:
+  ps1:  ln1; 0.2:  0.1: 1
+  ps21: ln2; 0.2 : 0.1: 1
+  ps22: ln2; 1 : 0.1: 0.2
+
+shapeSeries:
+  ssPs1: circ; ps1; 4;
+  ssPs21: circ; ps21; 4;
+  ss1Zip: line; ps1; ps21; zip;
+  ss1Cross: line; ps1; ps21; cross;
+  ssPs22: circ; ps22; 4;
+  ss2Zip: line; ps1; ps22; zip;
+  ss2Cross: line; ps1; ps22; cross;
+
+blocks:  
+  blk1:
+    - ss1Zip; stroke, 1, green;
+    - ssPs1; fill, gold;
+    - ssPs21; fill, gold;
+  blk2:
+    - ss2Zip; stroke, 1, magenta;
+    - ssPs1; fill, gold;
+    - ssPs22; fill, gold;
+  blk3:
+    - ss1Cross; stroke, 1, blue;
+    - ssPs1; fill, gold;
+    - ssPs21; fill, gold;
+  blk4:
+    - ss2Cross; stroke, 1, maroon;
+    - ssPs1; fill, gold;
+    - ssPs22; fill, gold;
+
+draw:
+  - blk1
+  - blk2; move; 250, 0
+  - label; 125, 120; anchor; center; w; 60; h; 20; ||| zip
+  - blk3; move;   0, 300
+  - blk4; move; 250, 300
+  - label; 125, 430; anchor; center; w; 60; h; 20; ||| cross
+

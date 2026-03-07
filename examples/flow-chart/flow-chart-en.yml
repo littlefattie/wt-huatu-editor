@@ -1,0 +1,88 @@
+components:
+  arrowAndText:
+    inputVars:
+      h: 60
+      lw: 4
+      arrowLen: 8
+      color: black;
+      text: Some text
+      tw: 100
+      th: 40
+      fs: 12
+    vars:
+      lh: $h
+      openDeg: 52
+    points:
+      p0: 0,0
+      pU: p0.x, p0.y - lh / 2
+      pD: p0.x, p0.y + lh / 2
+    shapes:
+      ls1: line; p0; 90; -lh / 2; lh / 2
+      lnDR: line; pD; -90 + openDeg / 2
+      lnDL: line; pD; -90 - openDeg / 2
+    cpoints:
+      pDL: lnDL; $arrowLen
+      pDR: lnDR; $arrowLen
+    draw:
+      - ls1; stroke; $lw; $color;linecap; round;
+      - line; pDL; pD; pDR; ||| stroke; $lw; $color; fill, none; linejoin; round; linecap; round;
+      - label; p0.x, p0.y - $fs/3; anchor; ml; w; $tw; h; $th; align; left; offset; 12, 0; fontSize; $fs; ||| $text
+
+  rectBlock:
+    inputVars:
+      w: 120
+      h: 90
+      bg: color; red
+      border: color; black
+      text: some text
+      textColor: white;
+      subText: [[EMPTY]]
+    vars:
+      bw: $w
+      bh: $h
+    points:
+      p0: 0,0
+      pLarge: p0.x, p0.y + bh / 10
+      pSmall: p0.x, p0.y
+    draw:
+      - rect; bycenter; p0; bw; bh; ||| fill, $bg; stroke, 2, $border;
+      - label; pLarge; anchor; bm; w; bw; h; bh / 2; color; $textColor; bold; fontSize;18;||| $text
+      - label; pSmall; anchor; tm; w; bw; h; bh / 3; color; $textColor; fontSize; 14;||| $subText
+  
+vars:
+  blkW: 190
+  blkH: 80
+  distV: blkH * 1.7
+  classV: blkH * 1.2
+
+points:
+  p0: 0,0
+  p1: p0.x, p0.y + distV
+  p2: p1.x, p1.y + distV * 1.3
+  p3: p2.x, p2.y + distV
+  p20: p2.x + blkW * 2.5, p2.y
+  p21: p20.x, p20.y - classV
+
+
+placements:
+  # blocks for Main
+  blkYml: rectBlock; at; p0; $textColor; white; $w; blkW; $h; blkH; $text; YML File; $subText; (design input)
+  blkJsObj: rectBlock; at; p1; $textColor; white; $w; blkW; $h; blkH; $bg; royalblue; $text; Javascript Object ;$subText; (like some json)
+  blkHuatuObj: rectBlock; at; p2; $textColor; white; $w; blkW; $h; blkH; $bg; #0b4d42; $text; WtHuatu Object;$subText; (the main object)
+  blkSvg: rectBlock; at; p3; $textColor; black; $w; blkW; $h; blkH; $bg; #f8f8f8; $text; Image (SVG format);$subText; (the output)
+  at1: arrowAndText; at; p0.x, (p0.y + p1.y) / 2; $tw; 150; $h;36; $arrowLen; 12; $text; Parse YML to Javascript Object
+  at2: arrowAndText; at; p1.x, (p1.y + p2.y) / 2; $tw; 150; $h;72; $arrowLen; 12; $text; Parse the expressions and build the design
+  at3: arrowAndText; at; p2.x, (p2.y + p3.y) / 2; $tw; 150; $h;36; $arrowLen; 12; $text; Generate the SVG of specific Job
+  # blocks for classes
+  blkClsPoint: rectBlock; at; p21;$w; blkW; $h; blkH;  $bg; #0b4d42; $text; Points; $subText; (points, cpoints, xpoints)
+  blkClsShapes: rectBlock; at; p20;$w; blkW; $h; blkH; $bg; #0b4d42; $text; Shapes; $subText; (line, circle, rectangles, polygons, etc.)
+draw:
+  - blkYml;
+  - blkJsObj;
+  - blkHuatuObj; 
+  - blkSvg;
+  - at1;
+  - at2;
+  - at3;
+  - blkClsPoint;
+  - blkClsShapes; 

@@ -1,0 +1,57 @@
+
+# This is an example demonstrating how to design **lineseg series**, including several conditions.
+
+points:
+  p0: 0,0
+
+shapes:
+  c1: circ; p0; 60;
+pointSeries:
+  psFromC1: c1; 0: 60: 350
+
+shapeSeries:
+  ssLs1: line; p0; 20:15:170; -80:10:0; 20:18:300
+  ssLs2: line; p0; 20:15:170; -60; 30:22:340;
+  ssLsC1: line; psFromC1; -30; -30; 30;
+  ssLsC2: line; psFromC1; -30: 10: 30; -30:5:0;
+  ssLsC3: line; psFromC1; -30: 10: 30; -30:5:0; 30;
+  ssLsC4: line; psFromC1; -45; -20: 4: 0; 5: 5: 40;
+
+blocks:
+  blkL1:
+    - ssLs1; stroke, 1, red;
+    - label; p0.x, p0.y - 65; anchor; bm; w; 120; h; 46; bdrcolor; black; ||| $L_1$ Decreasing, $L_2$ Increasing
+  blkL2:
+    - ssLs2; stroke, 1, blue;
+    - label; p0.x-32, p0.y - 65; anchor; bm; w; 140; h; 46; bdrcolor; black; ||| $L_1$ Fixed，$L_2$ Increasing
+  refCircle:
+    - c1; stroke, 1, grey; fill, none;
+  blkC1:
+    - refCircle
+    - psFromC1; 4; red; 
+    - ssLsC1; stroke,1, blue;
+    - label; p0.x, p0.y - 75; anchor; bm; w; 200; h;62; bdrcolor; black; ||| Multiple anchor points, Single Degree, both ends fixed and equal
+  blkC2:    
+    - refCircle
+    - psFromC1; 4; red; 
+    - ssLsC2; stroke,1, blue;
+    - label; p0.x, p0.y - 75; anchor; bm; w; 200; h; 62; bdrcolor; black; ||| Multiple anchor points, degree varies, only one length $L$ and varies
+  blkC3:
+    - refCircle
+    - psFromC1; 4; red; 
+    - ssLsC3; stroke,1, blue;
+    - label; p0.x, p0.y - 80; anchor; bm; w; 200; h; 62; bdrcolor; black; ||| Multiple anchor points, degree varies, $L_1$ Decreasing, $L_2$ fixed
+  blkC4:
+    - refCircle
+    - psFromC1; 4; red; 
+    - ssLsC4; stroke,1, blue;
+    - label; p0.x, p0.y - 80; anchor; bm; w; 200; h; 62; bdrcolor; black; ||| Multiple anchor points, degree fixed, $L_1$ Decreasing, $L_2$ Increasing
+
+draw:  
+  - blkL1;
+  - blkL2; move; 340, 0;
+  - blkC1; move;0, 320
+  - blkC2; move;300, 320
+  - blkC3; move;0, 560
+  - blkC4; move;300, 560
+  

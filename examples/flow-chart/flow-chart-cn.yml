@@ -1,0 +1,79 @@
+components:
+  arrowAndText:
+    inputVars:
+      h: 60
+      lw: 4
+      arrowLen: 8
+      color: black;
+      text: Some text
+      tw: 100
+      th: 40
+      fs: 12
+    vars:
+      lh: $h
+      openDeg: 52
+    points:
+      p0: 0,0
+      pU: p0.x, p0.y - lh / 2
+      pD: p0.x, p0.y + lh / 2
+    shapes:
+      ls1: line; p0; 90; -lh / 2; lh / 2
+      lnDR: line; pD; -90 + openDeg / 2
+      lnDL: line; pD; -90 - openDeg / 2
+    cpoints:
+      pDL: lnDL; $arrowLen
+      pDR: lnDR; $arrowLen
+    draw:
+      - ls1; stroke; $lw; $color;linecap; round;
+      - line; pDL; pD; pDR; ||| stroke; $lw; $color; fill, none; linejoin; round; linecap; round;
+      - label; p0.x, p0.y - $fs/3; anchor; ml; w; $tw; h; $th; align; left; offset; 12, 0; fontSize; $fs; ||| $text
+
+  rectBlock:
+    inputVars:
+      w: 120
+      h: 90
+      bg: color; red
+      border: color; black
+      text: some text
+      textColor: white;
+      subText: [[EMPTY]]
+    vars:
+      bw: $w
+      bh: $h
+    points:
+      p0: 0,0
+      pLarge: p0.x, p0.y + bh / 10
+      pSmall: p0.x, p0.y
+    draw:
+      - rect; bycenter; p0; bw; bh; ||| fill, $bg; stroke, 2, $border;
+      - label; pLarge; anchor; bm; w; bw; h; bh / 2; color; $textColor; bold; fontSize;18;||| $text
+      - label; pSmall; anchor; tm; w; bw; h; bh / 3; color; $textColor; fontSize; 14;||| $subText
+  
+vars:
+  blkW: 190
+  blkH: 80
+  distV: blkH * 1.7
+
+points:
+  p0: 0,0
+  p1: p0.x, p0.y + distV
+  p2: p1.x, p1.y + distV * 1.3
+  p3: p2.x, p2.y + distV
+
+
+placements:
+  blkYml: rectBlock; at; p0; $textColor; white; $w; blkW; $h; blkH; $text; 设计输入; $subText; (类yml格式文本输入)
+  blkJsObj: rectBlock; at; p1; $textColor; white; $w; blkW; $h; blkH; $bg; royalblue; $text; Javascript 对象 ;$subText; (和json类似)
+  blkHuatuObj: rectBlock; at; p2; $textColor; white; $w; blkW; $h; blkH; $bg; #0b4d42; $text; WtHuatu 对象;$subText; (最主要的类)
+  blkSvg: rectBlock; at; p3; $textColor; black; $w; blkW; $h; blkH; $bg; #f8f8f8; $text; SVG格式图片;$subText; (输出)
+  at1: arrowAndText; at; p0.x, (p0.y + p1.y) / 2; $tw; 150; $h;36; $arrowLen; 12; $text; 将yml格式文本输入转译成Javascript对象
+  at2: arrowAndText; at; p1.x, (p1.y + p2.y) / 2; $tw; 150; $h;72; $arrowLen; 12; $text; 解析各表达式，生成相应的类和对象
+  at3: arrowAndText; at; p2.x, (p2.y + p3.y) / 2; $tw; 150; $h;36; $arrowLen; 12; $text; 按照指定的配置生成内容
+draw:
+  - blkYml;
+  - blkJsObj;
+  - blkHuatuObj;
+  - blkSvg;
+  - at1;
+  - at2;
+  - at3;

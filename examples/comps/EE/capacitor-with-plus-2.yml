@@ -1,0 +1,65 @@
+# This is the commonly used Capacitor (Polarized) symbol in EE schematics, You can adjust
+# the color or dimension as your requirements.
+
+# 电子电路电路图中常用的电容符号（有极性），你可以按照你自己的需要调整相关尺寸或颜色
+
+# --- Input Vars ------
+inputVars:
+  lineWidth: 4
+  color: cc
+  dsn: C?
+  value: 10uF
+
+# --- Vars ------
+vars:
+  sw: $lineWidth
+  wBar: sw * 14
+  hBarP: sw * 2
+  dBar: sw * 5
+  hAll: sw * 24
+  wPlus: sw * 3
+
+# --- Points ------
+points:
+  p0: (0, 0)
+  p1: 0, -hAll / 2
+  p2: 0,  hAll / 2
+  #pBar1: 0, -dBar / 2
+  pBarPlusCenter: 0, -dBar/2
+  pArcL: -wBar/2 * 0.92, dBar/2 * 1.3
+  pArcR:  wBar/2 * 0.92, dBar/2 * 1.3
+  pArcCtrl: 0, -dBar/2 * 0.5
+  pPlusCenter: pBarPlusCenter.x - wPlus * 1.4, pBarPlusCenter.y - wPlus * 1.4
+
+# --- Shapes ------
+shapes:
+  #handU: line; p1; pBar1;
+  barPlus: rect; bycenter; pBarPlusCenter; wBar; hBarP;
+  #barPlus:  line; -wBar/2, -dBar/2;  wBar/2, -dBar/2;
+  arcMinus: b2; pArcL; pArcCtrl; pArcR;
+  plusH: line; pPlusCenter.x - wPlus/2, pPlusCenter.y; pPlusCenter.x + wPlus/2, pPlusCenter.y
+  plusV: line; pPlusCenter.x, pPlusCenter.y - wPlus/2; pPlusCenter.x, pPlusCenter.y + wPlus/2
+shapes2:
+  handU: line; p1; barPlus.n
+  handD: line; p2; arcMinus.m
+paths:
+  bars:
+    - handU
+    - handD
+    #- barPlus
+    - arcMinus
+  plus:
+    - plusH
+    - plusV
+
+# --- Draw --------
+draw:
+  - bars; stroke, $color, sw; linecap; round; linejoin; round; fill, none;
+  - plus; stroke, $color, sw; linecap; round; fill,none;
+  - barPlus; fill, $color;
+  - label; at;-wBar/2, 0; offset; -6,0; anchor; mr; w; sw * 10; h; 24; align; right;  ||| $dsn
+  - label; at; wBar/2, 0; offset;  6,0; anchor; ml; w; sw * 14; h; 24; align;left;   ||| $value
+
+ports:
+  - p; p1; 270; 0
+  - m; p2;  90; 0

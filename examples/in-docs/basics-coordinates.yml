@@ -1,0 +1,36 @@
+# This is the diagram presented in the basics page of the official docs, illustrating the Cartisian Coordinate system.
+
+# 这是文档中基本知识页面用于解释坐标系的示例。
+
+
+markers:
+  arr1: arrow; size; 10
+
+# --- Points ------
+points:
+  pO: (0, 0)
+  pPxy: 100, 100
+
+# --- Shapes ------
+shapes:
+  lnX: line; pO; 0
+  lnY: line; pO; 90
+  lsX: line; lnX; -20; 200;
+  lsY: line; lnY; -20; 200;
+  pXY: circ; pPxy; 3
+
+
+# --- Draw --------
+draw:
+  - lsX; fill, none; stroke; 1, cc; marker; arr1
+  - lsY; fill, none; stroke; 1, cc; marker; arr1
+  - pXY; fill, cc;
+  - line; pPxy; pPxy.x, 0; ||| fill, none; stroke; 0.5, cc; dash; 3,3
+  - line; pPxy; 0, pPxy.y; ||| fill, none; stroke; 0.5, cc; dash; 3 3
+  - circ; pO; 3; ||| fill, cc;
+  - label; at; pPxy.x, 0; w; 25; h; 22; anchor; bm ||| $x_0$
+  - label; at; 0, pPxy.y; w; 25; h; 22; anchor; mr ||| $y_0$
+  - label; at; lsX.e; w; 25; h; 22; anchor; ml ||| $X$
+  - label; at; lsY.e; w; 25; h; 22; anchor; tm ||| $Y$
+  - label; at; pPxy; w; 80; h; 22; anchor; tl;left ||| $(x_0, y_0)$
+  - label; at; pO; w; 25; h; 22; anchor; br; ||| $O$

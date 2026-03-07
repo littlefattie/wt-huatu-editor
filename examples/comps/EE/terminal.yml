@@ -1,0 +1,36 @@
+# This is the commonly used terminal sign in EE schematics.
+
+# 电子电路电路图中常用的端口符号，可随意调用
+
+# --- Input Vars ------
+inputVars:
+  lineWidth: 4
+  color: cc
+  fill: maroon
+  dotSize: 8
+  tag: [[EMPTY]]
+
+# --- Vars ------
+vars:
+  sw: $lineWidth
+  lBar: 6 * sw
+  rCirc: $dotSize
+
+# --- Points ------
+points:
+  pCenter: (0, 0)
+  pLabel: 0, -rCirc - sw
+
+# --- Shapes ------
+shapes:
+  dot: circ; (0,0); rCirc
+  bar: line; 0- lBar - dot.r, 0; -dot.r, 0;
+
+# --- Draw --------
+draw:
+  - bar; stroke, sw, $color; linecap; round
+  - dot; fill; $fill; stroke, $color, sw;
+  - label; at; pLabel; anchor; bm; w; 160; h; 20;  ||| $tag
+
+ports:
+  - p; bar.s; 180; 2*sw

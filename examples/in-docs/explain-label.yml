@@ -1,0 +1,280 @@
+
+styles:
+  styBox: fill,none; stroke; 1, grey; dash; 3,3;
+  styRealPos: fill, blue, 0.6
+labelStyles:
+  lbSty1:
+    align: left
+    bold: yes
+    italic: yes 
+    addLine: over
+    font: lishu 
+    fontsize: 30
+  lbSty2:
+    ref: lbSty1
+    italic: no
+    bold: no
+    fontsize: 16  
+  lbSty3: ref; lbSty2; fontsize; 12; color; magenta;
+vars:
+  dx: 110
+  dy: -70
+  lblW: 200
+  lblH: 100
+
+points:
+  p0: 0,0
+  pOffset: dx, dy;
+  pReal: p0.x + dx, p0.y + dy
+  pBcTL: pReal.x + lblW / 2, pReal.y + lblH / 2
+  pBcTM: pReal.x, pReal.y + lblH / 2
+  pBcTR: pReal.x - lblW / 2, pReal.y + lblH / 2
+  pBcML: pReal.x + lblW / 2, pReal.y
+  pBcMM: pReal.x, pReal.y
+  pBcMR: pReal.x - lblW / 2, pReal.y
+  pBcBL: pReal.x + lblW / 2, pReal.y - lblH / 2
+  pBcBM: pReal.x, pReal.y - lblH / 2
+  pBcBR: pReal.x - lblW / 2, pReal.y - lblH / 2
+
+shapes:
+  cLoc: circ; p0; 5;
+  cReal: circ; pReal; 5;
+  boxDemo: rect; bycenter; p0; 2*lblW; 2 *lblH;
+  boxTL: rect; bycenter; pBcTL; lblW; lblH;
+  boxTM: rect; bycenter; pBcTM; lblW; lblH;
+  boxTR: rect; bycenter; pBcTR; lblW; lblH;
+  boxML: rect; bycenter; pBcML; lblW; lblH;
+  boxMM: rect; bycenter; pBcMM; lblW; lblH;
+  boxMR: rect; bycenter; pBcMR; lblW; lblH;
+  boxBL: rect; bycenter; pBcBL; lblW; lblH;
+  boxBM: rect; bycenter; pBcBM; lblW; lblH;
+  boxBR: rect; bycenter; pBcBR; lblW; lblH; 
+  boxTLrot36: rotate; boxTL; 36; boxTL.nw;
+  boxTMrotm30: rotate; boxTM; -30; boxTM.n;
+blocks:
+  base:
+    - cLoc; fill, red
+    - cReal; styRealPos
+  blkGeneric:
+    - boxTLrot36; styBox
+    - base
+    - dimmark; p0; pReal; h; dir; left; gap; 10; barlenEqual; label; offset.x
+    - dimmark; p0; pReal; v; dir; left; gap; 10; barlenEqual; label; offset.y
+    - label; p0; offset; pOffset; w; lblW; h; lblH; rotdeg; 36 ||| label text (anchor = ml)
+    - line; p0.x - 20, p0.y + 50; p0.x - 2, p0.y + 5;  ||| stroke,1, black; marker; arrow2; 
+    - label; p0.x - 20, p0.y + 50; w; 80, h; 20; anchor; tm; ||| location
+    - line; pReal.x + 43, pReal.y -42; pReal.x + 6, pReal.y -6;  ||| stroke,1, black; marker; arrow2; 
+    - label; pReal.x + 45, pReal.y -42; w; 160, h; 20; anchor; ml; ||| 真实位置 real location
+    - line; pReal.x - 20, pReal.y; pReal.x + 200, pReal.y; ||| stroke,0.5,maroon;
+    - anglemark; pReal.x + 200, pReal.y; pReal; boxTLrot36[2]; label; rotDeg; size; 80; type; arrow-solid; linewidth; 2; anchor;tl; labelpos; 0.35; offset; 5,0;
+    - dimmark; boxTLrot36[4]; boxTLrot36[3]; gap; 6; label;  width
+    - dimmark; boxTLrot36[3]; boxTLrot36[2]; gap; 6; label;  height
+  blkAnchorPoints:
+    - boxDemo; styBox
+    - circ; boxDemo.nw; 5; ||| styRealPos
+    - label; boxDemo.nw; offset; -10,0; w; 100; h; 20; anchor; br; align;right; ||| topleft, tl
+    - circ; boxDemo.n;  5; ||| styRealPos
+    - label; boxDemo.n; offset; 0,-10; w; 110; h; 20; anchor; bm; ||| topmiddle, tm
+    - circ; boxDemo.ne; 5; ||| styRealPos
+    - label; boxDemo.ne; offset; 10,0; w; 90; h; 20; anchor; bl; align;left; ||| topright, tr
+    - circ; boxDemo.w;  5; ||| styRealPos
+    - label; boxDemo.w; offset; -10,0; w; 120; h; 20; anchor; mr; align;right; ||| middleleft, ml
+    - circ; boxDemo.c;  5; ||| styRealPos
+    - label; boxDemo.c; offset; 0,-10; w; 240; h; 20; anchor; bm; ||| middlemiddle, mm, center, c
+    - circ; boxDemo.e;  5; ||| styRealPos
+    - label; boxDemo.e; offset; 10,0; w; 120; h; 20; anchor; ml; align;left; ||| middleright, mr
+    - circ; boxDemo.sw; 5; ||| styRealPos
+    - label; boxDemo.sw; offset; -10,0; w; 120; h; 20; anchor; tr; align;right; ||| bottomleft, bl
+    - circ; boxDemo.s;  5; ||| styRealPos
+    - label; boxDemo.s; offset; 0,10; w; 140; h; 20; anchor; tm; ||| bottommiddle, bm
+    - circ; boxDemo.se; 5; ||| styRealPos
+    - label; boxDemo.se; offset; 10,0; w; 120; h; 20; anchor; tl; align;left; ||| bottomright, br
+  blkShowTL:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH; ||| label text \\n (anchor = tl)
+  blkShowTM:
+    - boxTM; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tm; w; lblW; h; lblH; ||| label text \\n (anchor = tm)
+  blkShowTR:
+    - boxTR; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tr; w; lblW; h; lblH; ||| label text \\n (anchor = tr)
+  blkShowML:
+    - boxML; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; ml; w; lblW; h; lblH; ||| label text \\n (anchor = ml)
+  blkShowMM:
+    - boxMM; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; mm; w; lblW; h; lblH; ||| label text \\n (anchor = mm)
+  blkShowMR:
+    - boxMR; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; mr; w; lblW; h; lblH; ||| label text \\n (anchor = mr)
+  blkShowBL:
+    - boxBL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; bl; w; lblW; h; lblH; ||| label text \\n (anchor = bl)
+  blkShowBM:
+    - boxBM; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; bm; w; lblW; h; lblH; ||| label text \\n (anchor = bm)
+  blkShowBR:
+    - boxBR; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; br; w; lblW; h; lblH; ||| label text \\n (anchor = br)
+  blkLblOverLine:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH;  addline;  over; ||| 上划线 overline
+  blkLblUnderLine:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH;  addline;  under; ||| 下划线 underline
+  blkLblMiddleLine:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH;  addline;  middle; ||| 删除线 middleline
+  blkLblLines:
+    - blkLblOverLine
+    - blkLblUnderLine; move; 0, 150
+    - blkLblMiddleLine; move; 0, 300
+  blkLblAlignCenter:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH; ||| 中间对齐, align center \\n(默认取值)
+  blkLblAlignLeft:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH;  align; left ||| 左对齐, align left
+  blkLblAlignRight:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH;  align; right ||| 右对齐, align right
+  blkLblAlign:
+    - blkLblAlignCenter;
+    - blkLblAlignLeft; move; 0, 150
+    - blkLblAlignRight; move; 0, 300
+  blkLblBold:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH; bold; color; red;font;lishu ||| 粗体 bold
+  blkLblItalic:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH; italic; color; magenta; font; fangsong ||| 斜体 italic
+  blkLblBoldItalic:
+    - blkLblBold
+    - blkLblItalic; move; 0, 150;
+  blkLineHeight1:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH; bold; lineheight; 1.0 ||| 这是一段特别长的文本，我们需要用三行来显示，于是 lineheight 会显得有用
+  blkLineHeight1d5:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH; bold; lineheight; 1.8 ||| 这是一段特别长的文本，我们需要用三行来显示，于是 lineheight 会显得有用
+  blkLineHeight:
+    - blkLineHeight1;
+    - blkLineHeight1d5; move; 0, 150
+  blkLbStyle1:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH; lbSty1; ||| 文本 lbSty1
+  blkLbStyle2:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH; refs; lbSty2; ||| 文本 lbSty2
+  blkLbStyle3:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH; refs; lbSty3; ||| 文本 lbSty3
+  blkLbStyes:
+    - blkLbStyle1
+    - blkLbStyle2; move; 0, 150;
+    - blkLbStyle3; move; 0, 300;
+  blkBgBdr:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH; bdr; magenta; bg; #66778899 ||| 背景色 #66778899 \\n 边框色 洋红(magenta)
+  blkFont1:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH; font; lishu ||| 隶书字体
+  blkFont2:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH; font; kaiti ||| 楷体字体
+  blkFont3:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH; font; times ||| Font Times New Roman
+  blkFont4:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH; font; 仿宋 ||| 仿宋字体（你可以使用中文字体名称）
+  blkFont5:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH; font; yahei ||| 微软雅黑字体
+  blkFont6:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH; font; Arial ||| Font Arial
+  blkFonts:
+    - blkFont1
+    - blkFont2; move; 0, 140
+    - blkFont3; move; 0, 280
+    - blkFont4; move; 450, 0
+    - blkFont5; move; 450, 140
+    - blkFont6; move; 450, 280
+  blkRotate:
+    - base
+    - boxTM; stroke,1, grey; dash; 3,3; fill, none;
+    - label; p0; offset; pOffset; anchor; tm; w; lblW; h; lblH; align;left;||| 我没旋转
+    - boxTMrotm30; stroke,1, red; dash; 3,3; fill, none;
+    - label; p0; offset; pOffset; anchor; tm; w; lblW; h; lblH;
+      rotdeg; -30; color; red; font; xxyyyx ||| 我旋转了$-30\degree$
+  blkKatex1:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH; ||| $x_{1,2} = \frac{-b\pm\sqrt{b^2-4ac}}{2a}$
+  blkKatex2:
+    - boxTL; styBox
+    - base
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH; 
+      align; left; font; songti; ||| 拉普拉斯变换: \\n 
+      $F(s)=\int_{-\infty}^{+\infty}f(t)e^{-st}\text{d}t$
+    - label; p0; offset; pOffset; anchor; tl; w; lblW; h; lblH; ||| # 没有任何文本内容，将不会绘制
+  blkKatexs:
+    - blkKatex1
+    - blkKatex2; move; 0, 150;
+  
+jobs:
+  generic:
+    - blkGeneric
+  anchorPoints:
+    - blkAnchorPoints
+  anchorPositions:
+    - blkShowTL;
+    - blkShowTM; move; 400, 0
+    - blkShowTR; move; 800, 0
+    - blkShowML; move; 0, 250
+    - blkShowMM; move; 400, 250
+    - blkShowMR; move; 800, 250
+    - blkShowBL; move; 0, 500
+    - blkShowBM; move; 400, 500
+    - blkShowBR; move; 800, 500
+  drawLabelStyles:
+    - blkLbStyes
+  drawBgBdr:
+    - blkBgBdr
+  drawFonts:
+    - blkFonts
+  drawRotate:
+    - blkRotate
+  drawKatexs:
+    - blkKatexs
+  

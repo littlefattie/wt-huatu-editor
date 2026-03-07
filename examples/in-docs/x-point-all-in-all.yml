@@ -1,0 +1,80 @@
+# This is an example demonstrating how to get intersection points between various kinds of shapes.
+
+# 这是文档中的一个实例，展示如何获取各种不同的图形间的交点，并标记出来。
+
+points:
+  p0: 0,0
+
+shapes:
+  line1: line; p0; -85
+  ls1: line; line1; -100; 160;
+  rect1: rect; bycenter; p0; 450; 300;
+  tri1:  tri; -330, 60; 270, 0; -60, -390
+  c1: circ; tri1.cin; tri1.rIn * 1.333
+  ell1: ell; p0; 100; 375; -43
+  bc2: b2; -270, 90; 160, -600; 198, 180 
+  bc3: b3; -300, -300; 150, -240; -240, 300; 360, -120;
+
+pointSeries:
+  psxLn1Bc3:   ls1;  x; bc3;
+  psxRec1Ell1: rect1;x; ell1;
+  psxTri1C1:   tri1; x; c1;
+  psxtri1Ell1: tri1; x; ell1;
+  psxtri1BC2:  tri1; x; bc2;
+  psxtri1BC3:  tri1; x; bc3;
+  psxC1Ell1:   c1;   x; ell1;
+  psxC1Bc2:    c1;   x; bc2;
+  psxC1Bc3:    c1;   x; bc3;
+  psxEll1Bc2:  ell1; x; bc2;
+  psxEll1Bc3:  ell1; x; bc3;
+  psxBc2Bc3:   bc2;  x; bc3;
+
+jobs:
+  ln1Bc3:
+    - ls1;  stroke, 3, cc; fill,none;
+    - bc3;  stroke, 3, cc; fill,none;
+    - psxLn1Bc3; 8; red; 0.6
+  rectEll1:
+    - rect1;  stroke, 3, cc; fill,none;
+    - ell1;   stroke, 3, cc; fill,none;
+    - psxRec1Ell1; 8; red; 0.6
+  tri1C1:
+    - tri1; stroke, 3, cc; fill,none;
+    - c1;   stroke, 3, cc; fill,none;
+    - psxTri1C1; 8; red; 0.6
+  tri1Bc2:
+    - tri1; stroke, 3, cc; fill,none;
+    - bc2;  stroke, 3, cc; fill,none;
+    - psxtri1BC2; 8; red; 0.6
+  tri1Bc3:
+    - tri1; stroke, 3, cc; fill,none;
+    - bc3;  stroke, 3, cc; fill,none;
+    - psxtri1BC3; 8; red; 0.6
+  tri1ELl1:
+    - tri1; stroke, 3, cc; fill,none;
+    - ell1; stroke, 3, cc; fill,none;
+    - psxtri1Ell1; 8; red; 0.6
+  c1ELl1:
+    - c1; stroke, 3, cc; fill,none;
+    - ell1; stroke, 3, cc; fill,none;
+    - psxC1Ell1; 8; red; 0.6
+  c1Bc2:
+    - c1; stroke, 3, cc; fill,none;
+    - bc2; stroke, 3, cc; fill,none;
+    - psxC1Bc2; 8; red; 0.6
+  c1Bc3:
+    - c1; stroke, 3, cc; fill,none;
+    - bc3; stroke, 3, cc; fill,none;
+    - psxC1Bc3; 8; red; 0.6
+  ellB2:
+    - ell1; stroke, 3, cc; fill,none;
+    - bc2;  stroke, 3, cc; fill,none;
+    - psxEll1Bc2; 8; red; 0.6
+  ellB3:
+    - ell1; stroke, 3, cc; fill,none;
+    - bc3;  stroke, 3, cc; fill,none;
+    - psxEll1Bc3; 8; red; 0.6
+  b2B3:
+    - bc2; stroke, 3, cc; fill,none;
+    - bc3;  stroke, 3, cc; fill,none;
+    - psxBc2Bc3; 8; red; 0.6

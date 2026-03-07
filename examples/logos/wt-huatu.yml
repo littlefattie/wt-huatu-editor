@@ -1,0 +1,50 @@
+# The layout for wt-huaut's logo
+
+title: WT Huatu logo
+desc: A preliminary demonstration for WT Huatu logo Design
+vars:
+  h: 100
+  wPole: 26
+  hm: 23.6
+  wm: 45
+  w: wPole * 2 + wm
+patterns:
+  ptn1: lines; deg;-45; density; 12; lineweight; 10; #ddd; bgcolor; #f1f1f1
+points:
+  pLBL: -w/2, h/2
+  pLBR: pLBL.x + wPole, pLBL.y
+  pLTL: pLBL.x, pLBL.y - h
+  pLTR: pLTL.x + wPole, pLTL.y
+  pLMU: pLTR.x, pLTR.y + h/2 - hm / 2
+  pRMU: pLMU.x + wm, pLMU.y
+  pRTL: pRMU.x, -h / 2
+  pRTR: pRTL.x + wPole, pRTL.y
+  pRBR: pRTR.x, h / 2
+  pRBL: pRBR.x -wPole, pRBR.y
+  pRMD: wm / 2, hm/2
+  pLMD: pLMU.x, hm/2
+  pEnd: pLMD.x, pLMD.y + h /5
+pointSeries:
+  pDots: pLBR; pLMD;
+shapes:
+  logo: line; pLBR; pLBL; pLTL; pLTR; pLMU; pRMU; pRTL; pRTR; pRBR; pRBL; pRMD; pLMD; pEnd
+  # finalLine: line; pLMD; pEnd
+shapeSeries:
+  dots: circle; pDots; 2
+draw:
+  - logo; stroke, cc, 1.2; pattern; ptn1
+  # - finalLine; stroke, black, 0.12; array, 3,1
+  - dots; fill; cc;
+  - circle; pEnd; 2 ||| fill, red
+jobs:
+  logo:
+    - logo; stroke, cc, 1.2; fill; #0b4d4233
+    # - finalLine; stroke, black, 0.12; array, 3,1
+    - dots; fill; cc;
+    - circle; pEnd; 2 ||| fill, red
+  logoRed:
+    - logo; stroke, black, 1.2; fill; red
+    # - finalLine; stroke, black, 0.12; array, 3,1
+    - dots; fill; black;stroke,black,1
+    - circle; pEnd; 2 ||| fill, red, stroke,black, 1;
+  

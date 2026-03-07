@@ -1,0 +1,48 @@
+
+# The example designing of StackOverflow's logo
+
+# --- Vars ------
+vars:
+  brickW: 160
+  brickH: 30 #brickW * 0.2
+  plateW: brickW * 1.8
+  plateH: brickH * 13 / 3
+  plateThkB: brickH * 4 / 3 # * 0.94
+  plateThkE: plateThkB
+  plateW2: plateW - 2 * plateThkE
+  rCirc: 1.8 * brickW
+
+# --- Points ------
+points:
+  pO: (0, 0)
+  pPlateBottom: pO.x, pO.y + plateH - brickH * 1.5
+  pPlateBottom2: pPlateBottom.x, pPlateBottom.y - plateThkB
+  pPlateL1: pPlateBottom2.x - plateW2 / 2, pPlateBottom2.y
+  pPlateL2: pPlateL1.x, pPlateL1.y - plateH + plateThkB
+  pPlateL3: pPlateL2.x - plateThkE, pPlateL2.y
+  pPlateL4: pPlateL3.x, pPlateBottom.y
+  pPlateR4: pO.x * 2 - pPlateL4.x, pPlateBottom.y
+  pPlateR3: pPlateR4.x, pPlateR4.y - plateH
+  pPlateR2: pPlateR3.x - plateThkE, pPlateR3.y
+  pPlateR1: pPlateR2.x, pPlateR2.y + plateH - plateThkB
+
+# --- Shapes ------
+shapes:
+  cForBrick: circle; pO.x + rCirc, pO.y; rCirc
+  brick0: rect; bycenter; pO; brickW; brickH
+  brick1: rotate; brick0; 11; cForBrick.c
+  brick2: rotate; brick0; 22; cForBrick.c
+  brick3: rotate; brick0; 33; cForBrick.c
+  brick4: rotate; brick0; 44; cForBrick.c
+  plate: plg; pPlateL1; pPlateL2; pPlateL3; pPlateL4; pPlateR4; pPlateR3; pPlateR2; pPlateR1;
+
+# --- Draw --------
+draw:
+  - plate; fill; #bcbbbb
+  #- cForBrick; stroke; 0.5, black; fill, none;
+  - brick0; fill, #fc8024; 
+  - brick1; fill, #fc8024; 
+  - brick2; fill, #fc8024; 
+  - brick3; fill, #fc8024; 
+  - brick4; fill, #fc8024; 
+

@@ -1,0 +1,43 @@
+# This is the commonly used Earth symbol in EE schematics.
+
+# 电子电路电路图中常用的接地符号，可随意调用
+
+# --- Input Vars ------
+inputVars:
+  lineWidth: 4
+  color: cc  
+  tag: GND
+
+# --- Vars ------
+vars:
+  sw: $lineWidth
+  wBar: sw * 11
+  degSlant: 27
+  hSlant: sw * 4
+  dxSlant: hSlant * dtan(degSlant)
+  hBarV: sw * 4
+
+# --- Points ------
+points:
+  p0: (0, 0)
+  p1: p0.x, p0.y + hBarV
+  p1L: p1.x - wBar / 2, p1.y
+  p1R: p1.x + wBar / 2, p1.y;
+  p2:  p1.x - dxSlant, p1.y + hSlant
+  p2L: p1L.x - dxSlant, p1L.y + hSlant
+  p2R: p1R.x - dxSlant, p1R.y + hSlant
+  pLabel: p2.x, p2.y + sw
+
+# --- Shapes ------
+shapes:
+  bar1: line; p0; p1; p2;
+  bar2: line; p2L; p1L; p1R; p2R;
+  
+# --- Draw --------
+draw: 
+  - bar1; stroke, sw, $color; linecap; round; linejoin; round;fill,none;
+  - bar2; stroke, sw, $color; linecap; round; linejoin; round;fill,none;
+  - label; at;pLabel; anchor; tm; w; wBar * 1.77; h; 20;  ||| $tag
+
+ports:
+  - p; p0; 90; 0

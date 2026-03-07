@@ -1,0 +1,39 @@
+# This is the diagram presented in the basics page of the official docs, illustrating the math functions usage.
+
+# 这是文档中基本知识页面用于解释数学函数的相关使用。
+
+vars:
+  # Define one angle
+  ang1: pi / 6
+  # Define its degree
+  deg1: ang1 * 180 / pi
+  # define two vars using sin and dcos
+  k1: sin(ang1)
+  k2: dcos(deg1)
+  # define basic len
+  len: 320
+  lenW: len * k1
+  lenH: len * k2
+  len2: sqrt(len * len / 2)
+
+points:
+  pO: 0, 0
+  pW: lenW, 0
+  pH: 0, -lenH
+
+shapes:
+  c1: circ; pW; len2;
+  c2: circ; pH; len2;
+
+xpoints:
+  pX1: c1; c2; e;
+
+draw:
+  # draw some triangle
+  - tri; pO; pW; pH; ||| stroke, 2, cc; fill, none; linejoin; round;
+  # mark one angle
+  - angleMark; pO; pW; pH; arrow-solid;cc;size; 23; showdeg; linewidth;2; anchor; br;lw; 70; lh; 18;
+  # mark the potential perpendicular angle
+  - angleMark; pW; pX1; pH; arrow-solid;red;size; 12; showperp; linewidth;2; fill, yellow
+  # draw the new triangle sides
+  - line; pW; pX1; pH; ||| stroke, 2, red; fill, none; linecap; round;

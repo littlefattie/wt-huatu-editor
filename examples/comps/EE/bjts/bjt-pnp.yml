@@ -1,0 +1,61 @@
+# This is the component design for PNP type Bipolar Junction Transistor (BJT)
+
+# 这是PNP型双极性晶体管的组件
+
+inputVars:
+  lineWidth: 4
+  color: cc
+  dsn: Q?              # Designator
+  partNo: 2N2222
+
+vars:
+  swArm: $lineWidth
+  degC: 42
+  degE: degC
+  bBarOffsetX: 8 * swArm
+  vwBBar: 2.2 * swArm
+  vlBBar: 11.8 * swArm
+  dCEonBar: 0.32 * vlBBar
+  lenArmCE: 4 * swArm
+  lenArmB: lenArmCE * 0.8
+  triDeg: 43
+  triLen: 5.5 * swArm
+
+points:
+  pBarB: -bBarOffsetX, 0
+  pBarC: pBarB.x, pBarB.y + dCEonBar / 2
+  pBarE: pBarB.x, pBarB.y - dCEonBar / 2
+  pTurnC: 0,  bBarOffsetX * dtan(degC) + pBarC.y
+  pTurnE: 0, -bBarOffsetX * dtan(degE) + pBarE.y
+  pArrowE: pTurnE.x - bBarOffsetX * 0.75, pTurnE.y + bBarOffsetX * dtan(degE) * 0.75
+  pPortB: pBarB.x - lenArmB, pBarB.y
+  pPortC: pTurnC.x, pTurnC.y + lenArmCE
+  pPortE: pTurnE.x, pTurnE.y - lenArmCE
+
+shapes:
+  bBar: rect; bycenter; pBarB; vwBBar; vlBBar
+  armB: line; pBarB; pPortB;
+  armC: line; pBarC; pTurnC; pPortC;
+  armE: line; pBarE; pTurnE; pPortE;
+  lArrLow:  line; pArrowE;  -degE - triDeg / 2
+  lArrHigh: line; pArrowE;  -degE + triDeg / 2
+cpoints:
+  pTri1: lArrLow;  triLen / dcos(triDeg/2)
+  pTri2: lArrHigh; triLen / dcos(triDeg/2)
+
+shapes2:
+  triOnE: polygon; pTri1; pArrowE; pTri2
+
+draw:
+  - armB; stroke, swArm, $color; linejoin; round; linecap; round; fill,none;
+  - armC; stroke, swArm, $color; linejoin; round; linecap; round; fill,none;
+  - armE; stroke, swArm, $color; linejoin; round; linecap; round; fill,none;
+  - bBar; fill, $color
+  - triOnE; fill, $color;
+  - label; 0, -bBarOffsetX * 0.1; w; bBarOffsetX * 2; h; 16; ml; left; ||| $dsn
+  - label; -bBarOffsetX/2, pTurnC.y; w; bBarOffsetX * 2; h; 16; tr; right; ||| $partNo
+
+ports:
+  - B; pPortB; 180; lenArmCE
+  - C; pPortC;  90; lenArmCE
+  - E; pPortE; -90; lenArmCE

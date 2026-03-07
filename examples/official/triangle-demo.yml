@@ -1,0 +1,133 @@
+# 这是在wt-huatu.org主页展示的样例。展示如何绘制一个三角形以及它的外接圆，还有标注角。
+
+# This is the example placed at home page of wt-huatu.org.
+# It will illustrate how to draw a triangle and automatically draw its circumcircle and incircle,
+# and the marks of angles.
+
+
+# Define basic variables
+vars:
+  a: 300
+  b: 400
+  # This is the alternate version of b, in case we want to modify it to make new drawing
+  # Here, we just copy it to another value and referencing parts will update accordingly
+  b3: 280
+
+# Define vertices of the triangle
+points:
+  ptO: 0, 0
+  ptA: a, 0
+  ptB: 0, -b
+  # This point is to make on-the-fly editing of point "ptB" as you saw on the page
+  ptB2: a/2, -b
+  # This is the new point corresponding variable b3
+  ptB3: a/2, -b3
+
+shapes:
+  # Define the triangle
+  tri1: tri; ptA; ptO; ptB;
+  # The incircle, define by referring "incenter" and "radius of incircle"
+  cIn:  circle; tri1.cin;  tri1.rin;
+  # The circumcircle, define by referring "circumcenter" and "radius of circumcircle"
+  cOut: circle; tri1.cout; tri1.rout
+  # The alternate triangle with ptB2
+  tri2: tri; ptA; ptO; ptB2
+  cIn2: circle; tri2.cin; tri2.rin;
+  cOut2: circle; tri2.cout; tri2.rout;
+  # The alternate triangle with b3
+  tri3: tri; ptA; ptO; ptB3
+  cIn3: circle; tri3.cin; tri3.rin;
+  cOut3: circle; tri3.cout; tri3.rout;
+
+blocks:
+  # Group all the angle marks into one block
+  angleMarks:
+    # Please notice that, when add switch `showPerp` and if the angle is perpendicular,
+    # then the label you give will not be shown
+    - angleMark; ptA; ptO; ptB; line1;black;size; 16; showperp;  linewidth;2; label; $\alpha$; anchor; bl;lw; 20; lh; 18
+    - angleMark; ptO; ptB; ptA; arrow-solid;black;size; 30; showperp; linewidth;2; label; $B$; anchor; tm; lh; 30;
+    # If the "showdeg" switch is present, then  the angleMark will show the actual degrees as the label
+    - angleMark; ptB; ptA; ptO; line2;black;size; 20; showperp; linewidth;2;showdeg;anchor;br;lh;16;
+  # Group all the point names into a block
+  labels:
+    - label; ptA; anchor; tl; w; 25; h;20; ||| $A$
+    - label; ptO; anchor; tr; w; 25; h;20; ||| $O$
+    - label; ptB; anchor; br; w; 25; h;20; ||| $B$
+
+  # The group for alternate triangle tri2(ptB2)
+  angleMarks2:
+    # Please notice that, if the angle is not perpendicular, the switch `showPerp` will not working.
+    # It will show the label if you assigned
+    - angleMark; ptA; ptO; ptB2; line1;black;size; 16; showperp; linewidth;2; label; $\alpha$; anchor; bl;lw; 20; lh; 18
+    - angleMark; ptO; ptB2; ptA; arrow-solid;black;size; 30; showperp; linewidth;2; label; $B$; anchor; tm; lh; 30;
+    - angleMark; ptB2; ptA; ptO; line2;black;size; 20; showperp; linewidth;2;showdeg;anchor;br;lh;16;
+  # The group for alternate triangle tri2(ptB2)
+  labels2:
+    - label; ptA;  anchor; tl; w; 25; h;20; ||| $A$
+    - label; ptO;  anchor; tr; w; 25; h;20; ||| $O$
+    - label; ptB2; anchor; br; w; 25; h;20; ||| $B$
+
+  # The group for alternate triangle tri3(b3)
+  angleMarks3:
+    - angleMark; ptA; ptO; ptB3; line1;black;size; 16; showperp; linewidth;2; label; $\alpha$; anchor; bl;lw; 20; lh; 18
+    - angleMark; ptO; ptB3; ptA; arrow-solid;black;size; 30; showperp; linewidth;2; label; $B$; anchor; tm; lh; 30;
+    - angleMark; ptB3; ptA; ptO; line2;black;size; 20; showperp; linewidth;2;showdeg;anchor;br;lh;16;
+  # The group for alternate triangle tri2(ptB2)
+  labels3:
+    - label; ptA;  anchor; tl; w; 25; h;20; ||| $A$
+    - label; ptO;  anchor; tr; w; 25; h;20; ||| $O$
+    - label; ptB3; anchor; br; w; 25; h;20; ||| $B$
+
+# The default job, you can put anything you want to be in visual as a quick show
+draw:
+  - cOut; fill; none,0.3;stroke, red, 2
+  - cIn; fill; maroon, 0.2;
+  - angleMarks
+  - tri1; stroke; 2, black;fill,none; linejoin; round
+
+# The different result view named in steps
+jobs:
+  step1:
+    # Draw mark of the perpendicular angle.
+    # We use the "showperp" switch, fill with yellow, linewidth with 2
+    - angleMark; ptA; ptO; ptB; line1;black;size; 10; showperp; fill, yellow;linewidth;2
+    # Draw the triangle
+    - tri; ptA; ptO; ptB; ||| stroke; 2, black;fill,none; linejoin; round
+
+  step2:
+    # based on step1, draw the circumcircle and incircle
+    - cOut; fill; none,0.3;stroke, red, 2
+    - cIn; fill; maroon, 0.2;
+    - angleMark; ptA; ptO; ptB; line1;black;size; 10; showperp; fill, yellow;linewidth;2
+    - tri1; stroke; 2, black;fill,none; linejoin; round
+
+  step3:
+    # based on step2, draw the anglemark block, which includes all marks of the three angles
+    - cOut; fill; none,0.3;stroke, red, 2
+    - cIn; fill; maroon, 0.2;
+    - angleMarks
+    - tri1; stroke; 2, black;fill,none; linejoin; round
+
+  step4:
+    # based on step3, add Point names (labels)
+    - cOut; fill; none,0.3;stroke, red, 2
+    - cIn; fill; maroon, 0.2;
+    - angleMarks
+    - tri1; stroke; 2, black;fill,none; linejoin; round
+    - labels
+
+  setp5:
+    # Same as step4, but with tri2(ptB2) version
+    - cOut2; fill; none,0.3;stroke, red, 2
+    - cIn2; fill; maroon, 0.2;
+    - angleMarks2
+    - tri2; stroke; 2, black;fill,none; linejoin; round
+    - labels2
+
+  step6:
+    # Same with step5, but with tri3(b3) version
+    - cOut3; fill; none,0.3;stroke, red, 2
+    - cIn3; fill; maroon, 0.2;
+    - angleMarks3
+    - tri3; stroke; 2, black;fill,none; linejoin; round
+    - labels3

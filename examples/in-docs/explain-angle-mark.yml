@@ -1,0 +1,177 @@
+# wt-huatu default empty file
+
+vars:
+  wAng: 600
+  hAng: 300
+  sAng: 450
+  wLbl: 90
+  hLbl: 45
+points:
+  ptA: wAng, 0
+  ptB: 0,0
+  ptC: wAng, -hAng
+  ptS: sAng, ptA.y
+  ptLblOffset: 100, 80
+shapes:
+  outline: line; ptA; ptB; ptC;
+  lineBA: line; ptB; ptA
+  lineBC: line; ptB; ptC
+  circS: circ; ptB; sAng
+  arcAng: arc; circS; lineBA.deg; lineBC.deg; ccw;
+  circS2: circ; ptB; sAng + 3 * 4
+  circS3: circ; ptB; sAng + 3 * 8
+  circS4: circ; ptB; sAng + 3 * 12
+  arcAng2: arc; circS2; lineBA.deg; lineBC.deg; ccw;
+  arcAng3: arc; circS3; lineBA.deg; lineBC.deg; ccw;
+  arcAng4: arc; circS4; lineBA.deg; lineBC.deg; ccw;
+  arcAngLarge: arc; circS; lineBA.deg; lineBC.deg; cw;
+cpoints:
+  cpLabelPos: arcAng; 0.7
+  cpLabelPos2: arcAng2; 0.7
+  cpLabelPos3: arcAng3; 0.7
+  cpLabelPos4: arcAng4; 0.7
+  cpLabelPosLarge: arcAngLarge; 0.7
+shapes2:
+  lbBox: rect; cpLabelPos.x + ptLblOffset.x, cpLabelPos.y + ptLblOffset.y; wLbl; hLbl;
+  lbBox2: rect; cpLabelPos2.x + ptLblOffset.x, cpLabelPos2.y + ptLblOffset.y; wLbl; hLbl;
+  lbBox3: rect; cpLabelPos3.x + ptLblOffset.x, cpLabelPos3.y + ptLblOffset.y; wLbl; hLbl;
+  lbBox4: rect; cpLabelPos4.x + ptLblOffset.x, cpLabelPos4.y + ptLblOffset.y; wLbl; hLbl;
+  lbBoxLarge: rect; cpLabelPosLarge.x + ptLblOffset.x, cpLabelPosLarge.y + ptLblOffset.y; wLbl; hLbl;
+blocks:
+  blkPoints:
+    - circ; ptA; 5; ||| fill, red, 0.6
+    - circ; ptB; 5; ||| fill, red, 0.6
+    - circ; ptC; 5; ||| fill, red, 0.6
+    - label; ptA; anchor; ml; w; 35; ||| $A$
+    - label; ptB; anchor; mr; w; 35; ||| $B$
+    - label; ptC; anchor; bl; w; 35; ||| $C$
+  blkGeneric:
+    - outline; stroke, 4, #ccc; fill,none; linejoin; round;
+    - blkPoints
+    - lbBox; stroke,1, red; dash; 3,3; fill, #eee;
+    - anglemark; ptA; ptB; ptC; size; sAng; linewidth; 4; arrow-solid; anchor; tl; fill, 0.4, yellow;labelPos; 0.7; offset; ptLblOffset; lw; wLbl; lh; hLbl; label; $\alpha$
+    - dimmark; ptB; ptS; label; size;
+    - circ; cpLabelPos; 5; ||| fill, aqua, 0.6
+    - dimmark; lbBox.se; lbBox.ne; label; label_Height; textsize; 12; lw; 100;
+    - dimmark; lbBox.ne; lbBox.nw; label; label_Width; textsize; 12; lw; 100;
+    - dimmark; cpLabelPos; lbBox.nw; h; left; label; offset.x; textsize; 12;
+    - dimmark; cpLabelPos; lbBox.nw; v; right; label; offset.y; textsize; 12;
+    - label; cpLabelPos; w; 120; h; 40; fs;12 ||| labelPos
+    - line; cpLabelPos.x + 33, cpLabelPos.y + 22; cpLabelPos.x + 6, cpLabelPos.y + 2; ||| stroke,1, blue;; marker; arrow1;
+    - line; ptB; cpLabelPos; ||| stroke,1, aqua;
+    - anglemark; ptA; ptB; cpLabelPos; size; sAng/2; linewidth; 2; arrow-solid; ml; fill, 1, yellow; label; $0.7\alpha=\text{labelPos}\times\alpha$; textsize; 12 ; lw; 160; lh; 20; offset; 10, 0;
+  blkTypeLine1:
+    - outline; stroke, 4, #ccc; fill,none; linejoin; round;
+    - blkPoints
+    - lbBox; stroke,1, red; dash; 3,3; fill, #eee;
+    - anglemark; ptA; ptB; ptC; size; sAng; linewidth; 4; line1; anchor; tl; fill, 0.4, yellow;labelPos; 0.7; offset; ptLblOffset; lw; wLbl; lh; hLbl; label; $\alpha$
+    - dimmark; ptB; ptS; label; size;
+    - circ; cpLabelPos; 5; ||| fill, aqua, 0.6
+    - dimmark; cpLabelPos; lbBox.nw; h; left; label; offset.x; textsize; 12;
+    - dimmark; cpLabelPos; lbBox.nw; v; right; label; offset.y; textsize; 12;
+    - line; ptB; cpLabelPos; ||| stroke,1, aqua;
+    - anglemark; ptA; ptB; cpLabelPos; size; sAng/2; linewidth; 2; arrow-solid; ml; fill, 1, yellow; label; $0.7\alpha=\text{labelPos}\times\alpha$; textsize; 12 ; lw; 160; lh; 20; offset; 10, 0;
+    - label; (ptA.x + ptB.x) / 2, ptA.y + 50; anchor; tm; ||| type == line1
+  blkTypeLine2:
+    - outline; stroke, 4, #ccc; fill,none; linejoin; round;
+    - blkPoints
+    - lbBox2; stroke,1, red; dash; 3,3; fill, #eee;
+    - anglemark; ptA; ptB; ptC; size; sAng; linewidth; 4; line2; anchor; tl; fill, 0.4, yellow;labelPos; 0.7; offset; ptLblOffset; lw; wLbl; lh; hLbl; label; $\alpha$
+    - dimmark; ptB; ptS; label; size;
+    - circ; cpLabelPos2; 5; ||| fill, aqua, 0.6
+    - dimmark; cpLabelPos2; lbBox2.nw; h; left; label; offset.x; textsize; 12;
+    - dimmark; cpLabelPos2; lbBox2.nw; v; right; label; offset.y; textsize; 12;
+    - line; ptB; cpLabelPos2; ||| stroke,1, aqua;
+    - anglemark; ptA; ptB; cpLabelPos2; size; sAng/2; linewidth; 2; arrow-solid; ml; fill, 1, yellow; label; $0.7\alpha=\text{labelPos}\times\alpha$; textsize; 12 ; lw; 160; lh; 20; offset; 10, 0;
+    - label; (ptA.x + ptB.x) / 2, ptA.y + 50; anchor; tm; ||| type == line2
+  blkTypeLine3:
+    - outline; stroke, 4, #ccc; fill,none; linejoin; round;
+    - blkPoints
+    - lbBox3; stroke,1, red; dash; 3,3; fill, #eee;
+    - anglemark; ptA; ptB; ptC; size; sAng; linewidth; 4; line3; anchor; tl; fill, 0.4, yellow;labelPos; 0.7; offset; ptLblOffset; lw; wLbl; lh; hLbl; label; $\alpha$
+    - dimmark; ptB; ptS; label; size;
+    - circ; cpLabelPos3; 5; ||| fill, aqua, 0.6
+    - dimmark; cpLabelPos3; lbBox3.nw; h; left; label; offset.x; textsize; 12;
+    - dimmark; cpLabelPos3; lbBox3.nw; v; right; label; offset.y; textsize; 12;
+    - line; ptB; cpLabelPos3; ||| stroke,1, aqua;
+    - anglemark; ptA; ptB; cpLabelPos3; size; sAng/2; linewidth; 2; arrow-solid; ml; fill, 1, yellow; label; $0.7\alpha=\text{labelPos}\times\alpha$; textsize; 12 ; lw; 160; lh; 20; offset; 10, 0;
+    - label; (ptA.x + ptB.x) / 2, ptA.y + 50; anchor; tm; ||| type == line3
+  blkTypeLine4:
+    - outline; stroke, 4, #ccc; fill,none; linejoin; round;
+    - blkPoints
+    - lbBox4; stroke,1, red; dash; 3,3; fill, #eee;
+    - anglemark; ptA; ptB; ptC; size; sAng; linewidth; 4; line4; anchor; tl; fill, 0.4, yellow;labelPos; 0.7; offset; ptLblOffset; lw; wLbl; lh; hLbl; label; $\alpha$
+    - dimmark; ptB; ptS; label; size;
+    - circ; cpLabelPos4; 5; ||| fill, aqua, 0.6
+    - dimmark; cpLabelPos4; lbBox4.nw; h; left; label; offset.x; textsize; 12;
+    - dimmark; cpLabelPos4; lbBox4.nw; v; right; label; offset.y; textsize; 12;
+    - line; ptB; cpLabelPos4; ||| stroke,1, aqua;
+    - anglemark; ptA; ptB; cpLabelPos4; size; sAng/2; linewidth; 2; arrow-solid; ml; fill, 1, yellow; label; $0.7\alpha=\text{labelPos}\times\alpha$; textsize; 12 ; lw; 160; lh; 20; offset; 10, 0;
+    - label; (ptA.x + ptB.x) / 2, ptA.y + 50; anchor; tm; ||| type == line4
+  blkTypeArrowSolid:
+    - outline; stroke, 4, #ccc; fill,none; linejoin; round;
+    - blkPoints
+    - lbBox; stroke,1, red; dash; 3,3; fill, #eee;
+    - anglemark; ptA; ptB; ptC; size; sAng; linewidth; 4; arrow-solid; anchor; tl; fill, 0.4, yellow;labelPos; 0.7; offset; ptLblOffset; lw; wLbl; lh; hLbl; label; $\alpha$
+    - dimmark; ptB; ptS; label; size;
+    - circ; cpLabelPos; 5; ||| fill, aqua, 0.6
+    - dimmark; cpLabelPos; lbBox.nw; h; left; label; offset.x; textsize; 12;
+    - dimmark; cpLabelPos; lbBox.nw; v; right; label; offset.y; textsize; 12;
+    - line; ptB; cpLabelPos; ||| stroke,1, aqua;
+    - anglemark; ptA; ptB; cpLabelPos; size; sAng/2; linewidth; 2; arrow-solid; ml; fill, 1, yellow; label; $0.7\alpha=\text{labelPos}\times\alpha$; textsize; 12 ; lw; 160; lh; 20; offset; 10, 0;
+    - label; (ptA.x + ptB.x) / 2, ptA.y + 50; anchor; tm; ||| type == arrow-solid
+  blkTypeArrowSimple:
+    - outline; stroke, 4, #ccc; fill,none; linejoin; round;
+    - blkPoints
+    - lbBox; stroke,1, red; dash; 3,3; fill, #eee;
+    - anglemark; ptA; ptB; ptC; size; sAng; linewidth; 4; arrow-simple; anchor; tl; fill, 0.4, yellow;labelPos; 0.7; offset; ptLblOffset; lw; wLbl; lh; hLbl; label; $\alpha$
+    - dimmark; ptB; ptS; label; size;
+    - circ; cpLabelPos; 5; ||| fill, aqua, 0.6
+    - dimmark; cpLabelPos; lbBox.nw; h; left; label; offset.x; textsize; 12;
+    - dimmark; cpLabelPos; lbBox.nw; v; right; label; offset.y; textsize; 12;
+    - line; ptB; cpLabelPos; ||| stroke,1, aqua;
+    - anglemark; ptA; ptB; cpLabelPos; size; sAng/2; linewidth; 2; arrow-solid; ml; fill, 1, yellow; label; $0.7\alpha=\text{labelPos}\times\alpha$; textsize; 12 ; lw; 160; lh; 20; offset; 10, 0;
+    - label; (ptA.x + ptB.x) / 2, ptA.y + 50; anchor; tm; ||| type == arrow-simple
+  blkTypeArrowEmpty:
+    - outline; stroke, 4, #ccc; fill,none; linejoin; round;
+    - blkPoints
+    - lbBox; stroke,1, red; dash; 3,3; fill, #eee;
+    - anglemark; ptA; ptB; ptC; size; sAng; linewidth; 4; arrow-empty; anchor; tl; fill, 0.4, yellow;labelPos; 0.7; offset; ptLblOffset; lw; wLbl; lh; hLbl; label; $\alpha$
+    - dimmark; ptB; ptS; label; size;
+    - circ; cpLabelPos; 5; ||| fill, aqua, 0.6
+    - dimmark; cpLabelPos; lbBox.nw; h; left; label; offset.x; textsize; 12;
+    - dimmark; cpLabelPos; lbBox.nw; v; right; label; offset.y; textsize; 12;
+    - line; ptB; cpLabelPos; ||| stroke,1, aqua;
+    - anglemark; ptA; ptB; cpLabelPos; size; sAng/2; linewidth; 2; arrow-solid; ml; fill, 1, yellow; label; $0.7\alpha=\text{labelPos}\times\alpha$; textsize; 12 ; lw; 160; lh; 20; offset; 10, 0;
+    - label; (ptA.x + ptB.x) / 2, ptA.y + 50; anchor; tm; ||| type == arrow-empty
+  blkTypesLine1234:
+    - blkTypeLine1
+    - blkTypeLine2; move; 0, 400;
+    - blkTypeLine3; move; 0, 800;
+    - blkTypeLine4; move; 0, 1200;
+  blkTypesArrows:
+    - blkTypeArrowSolid
+    - blkTypeArrowSimple; move; 0, 400;
+    - blkTypeArrowEmpty; move; 0, 800;
+  blkLarge:
+    - outline; stroke, 4, #ccc; fill,none; linejoin; round;
+    - blkPoints
+    - lbBoxLarge; stroke,1, red; dash; 3,3; fill, #eee;
+    - anglemark; ptA; ptB; ptC; size; sAng; linewidth; 4; arrow-solid; anchor; tl; 
+      large; fill, 0.4, yellow;labelPos; 0.7; offset; ptLblOffset; lw; wLbl; lh; hLbl; label; $\alpha$
+    - dimmark; ptB; ptS; label; size; left;
+    - circ; cpLabelPosLarge; 5; ||| fill, aqua, 0.6
+    - dimmark; cpLabelPosLarge; lbBoxLarge.nw; h; left; label; offset.x; textsize; 12;
+    - dimmark; cpLabelPosLarge; lbBoxLarge.nw; v; right; label; offset.y; textsize; 12;
+    - line; ptB; cpLabelPosLarge; ||| stroke,1, aqua;
+    - anglemark; ptA; ptB; cpLabelPosLarge; large; size; sAng/2; linewidth; 2; arrow-solid; tr; fill, 1, yellow; label; $0.7\alpha=\text{labelPos}\times\alpha$; textsize; 12 ; lw; 160; lh; 20; offset; 10, 0;
+    - circ; ptB; sAng * 1.02; ||| fill, none;
+jobs:
+  generic:
+    - blkGeneric
+  showTypesLines:
+    - blkTypesLine1234
+  showTypesArrows:
+    - blkTypesArrows
+  showLarge:
+    - blkLarge

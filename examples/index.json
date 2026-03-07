@@ -1,0 +1,410 @@
+[
+  {
+    "path": "comps/EE/bjts",
+    "name": "bjt-npn-color-arrow.yml"
+  },
+  {
+    "path": "comps/EE/bjts",
+    "name": "bjt-npn-with-circle.yml"
+  },
+  {
+    "path": "comps/EE/bjts",
+    "name": "bjt-npn.yml"
+  },
+  {
+    "path": "comps/EE/bjts",
+    "name": "bjt-pnp-color-arrow.yml"
+  },
+  {
+    "path": "comps/EE/bjts",
+    "name": "bjt-pnp-with-circle.yml"
+  },
+  {
+    "path": "comps/EE/bjts",
+    "name": "bjt-pnp.yml"
+  },
+  {
+    "path": "comps/EE",
+    "name": "block-port.yml"
+  },
+  {
+    "path": "comps/EE",
+    "name": "capacitor-polar.yml"
+  },
+  {
+    "path": "comps/EE",
+    "name": "capacitor-with-plus-2.yml"
+  },
+  {
+    "path": "comps/EE",
+    "name": "capacitor-with-plus.yml"
+  },
+  {
+    "path": "comps/EE",
+    "name": "capacitor.yml"
+  },
+  {
+    "path": "comps/EE/diodes",
+    "name": "diode-schottky.yml"
+  },
+  {
+    "path": "comps/EE/diodes",
+    "name": "diode-zener.yml"
+  },
+  {
+    "path": "comps/EE/diodes",
+    "name": "diode.yml"
+  },
+  {
+    "path": "comps/EE/diodes",
+    "name": "tl431-boxed.yml"
+  },
+  {
+    "path": "comps/EE/diodes",
+    "name": "tl431.yml"
+  },
+  {
+    "path": "comps/EE",
+    "name": "ground-earth.yml"
+  },
+  {
+    "path": "comps/EE",
+    "name": "ground-triangle.yml"
+  },
+  {
+    "path": "comps/EE",
+    "name": "ground.yml"
+  },
+  {
+    "path": "comps/EE",
+    "name": "inductor-2.yml"
+  },
+  {
+    "path": "comps/EE",
+    "name": "inductor-ferrite-core.yml"
+  },
+  {
+    "path": "comps/EE",
+    "name": "inductor-iron-core-2.yml"
+  },
+  {
+    "path": "comps/EE",
+    "name": "inductor-iron-core.yml"
+  },
+  {
+    "path": "comps/EE",
+    "name": "inductor.yml"
+  },
+  {
+    "path": "comps/EE",
+    "name": "power.yml"
+  },
+  {
+    "path": "comps/EE",
+    "name": "resistor-line.yml"
+  },
+  {
+    "path": "comps/EE",
+    "name": "resistor.yml"
+  },
+  {
+    "path": "comps/EE",
+    "name": "terminal.yml"
+  },
+  {
+    "path": "comps",
+    "name": "ldo-5v.yml"
+  },
+  {
+    "path": "flow-chart",
+    "name": "flow-chart-cn.yml"
+  },
+  {
+    "path": "flow-chart",
+    "name": "flow-chart-en.yml"
+  },
+  {
+    "path": "generic",
+    "name": "bagua.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "basic-shapes-arc1.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "basic-shapes-arc2.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "basic-shapes-arc3.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "basic-shapes-bezier2.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "basic-shapes-bezier3.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "basic-shapes-circle.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "basic-shapes-ellipse.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "basic-shapes-lineseg.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "basic-shapes-polygon.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "basic-shapes-polyline.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "basic-shapes-rect.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "basic-shapes-regular-polygon.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "basic-shapes-ring.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "basic-shapes-triangle.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "basics-angle.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "basics-coordinates.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "basics-math-function-use.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "default-template-intro.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "explain-angle-mark.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "explain-label.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "get-point-arc.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "get-point-bezier.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "get-point-circle.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "get-point-ellipse.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "get-point-line.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "get-point-lineseg.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "get-point-polygon.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "get-point-polyline.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "get-point-rect.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "get-point-ring.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "get-point-triangle.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "point-series-1.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "point-series-2.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "point-series-3.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "point-series-4.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "point-series-5.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "refer-point.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-arc.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-b2-en.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-b2.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-b3-en.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-b3.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-circle-en.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-circle.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-ellipse-en.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-ellipse.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-lines-2.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-lines-en.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-lines.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-polygon-en.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-polygon.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-polyline-en.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-polyline.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-rect-en.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-rect.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-regular-polygon-en.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-regular-polygon.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-series-triangle.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-transform-en.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "shape-translate-how-to-draw-star.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "x-point-all-in-all.yml"
+  },
+  {
+    "path": "in-docs",
+    "name": "x-point-inner-outer.yml"
+  },
+  {
+    "path": "logos",
+    "name": "e-cny.yml"
+  },
+  {
+    "path": "logos",
+    "name": "open-ai.yml"
+  },
+  {
+    "path": "logos",
+    "name": "stack-overflow.yml"
+  },
+  {
+    "path": "logos",
+    "name": "vs-code.yml"
+  },
+  {
+    "path": "logos",
+    "name": "wt-huatu.yml"
+  },
+  {
+    "path": "logos",
+    "name": "xiaomi.yml"
+  },
+  {
+    "path": "official",
+    "name": "rgb-blender.yml"
+  },
+  {
+    "path": "official",
+    "name": "triangle-demo.yml"
+  }
+]

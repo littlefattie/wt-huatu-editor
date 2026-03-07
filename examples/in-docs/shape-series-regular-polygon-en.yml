@@ -1,0 +1,31 @@
+# This is an example demonstrating how to make **Regular Polygon Series**.
+
+vars:
+  w: 666
+
+shapes:
+  lsX: line; 0,0; 0; -w/2; w/2;
+
+pointSeries:
+  psX: lsX; 0, 0.08, 0.22, 0.4, 0.63, 0.9;
+
+shapeSeries:
+  ssNplg1: plgn; 3:1:8; psX; 20: (w/5-20)/7: w/5; 0: 33: 360;
+  ssNplg2: plgn; 3:1:8; 0,0; 20: (w/5-20)/7: w/5; 0: 33: 360;
+  ssNplg3: plgn; 7;     0,0; 20: (w/5-20)/7: w/5; 0: 33: 360;
+blocks:
+  blkNplg1:
+    - lsX; stroke, 1, grey; dash, 3,3;
+    - psX; 3; blue;
+    - ssNplg1; fill, magenta, 0.4; stroke, 1, black;
+    - label; 0, -w/7; anchor; bm; w; 260; h; 40; ||| All the parameters are series
+  blkNplg2:
+    - ssNplg2; fill, royalblue, 0.3; stroke, 1, black;
+    - label; 0, -w/6; anchor; bm; w; 160; h; 40;  ||| Center is fixed, others are series
+  blkNplg3:
+    - ssNplg3; fill, silver, 0.3; stroke, 1, black;
+    - label; 0, -w/5; anchor; bm; w; 160; h; 40; ||| Center is fixed, edge count (17) is fixed
+draw:
+  - blkNplg1;
+  - blkNplg2; move; -w/4, w/2.2;
+  - blkNplg3; move;  w/4, w/2.2;

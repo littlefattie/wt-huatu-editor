@@ -1,0 +1,47 @@
+# This is an example demonstrating how to make **Ellipse Series**.
+
+points:
+  p0: 0,0
+
+shapes:
+  ln1: line; p0; -42
+  c1:  circ; p0; 300
+
+pointSeries:
+  # Pick Points on Line, equally distanced
+  psLn1:   ln1; -200 : 50 : 200
+  # Pick points on a Circle by providing degrees
+  psOnC1:  c1; 90, 130, 160, 180, 222, 255, 300, 333; 
+  # Pick points on circle with degree series
+  ps2OnC1: c1; 0 : 30 : 359
+
+shapeSeries:
+  # Center is series，Rx and Ry fixed，Rotating degree varies, is a series
+  ssEll1:  ell; psLn1; 20; 12; -80: 20: 80;
+  # Center fixed, Rx and Ry are series, rotating degree is series
+  ssEll2:  ell; p0; 20: 20: 100; 14: 10: 70; -60: 20: 90;
+  # Center varies, Rx, Ry are series, rotating angle is 0
+  ssEll3:  ell; psOnC1; 20: 12: 104; 104: 12: 20; 
+  # Center is fixed，Rx, Ry varies, rotating angle is zero
+  ssEll3a: ell; c1.40; 20: 12: 104; 104: 12: 20; 
+  # Center is point series, Rx and Ry fixed, rotating angle is series
+  ssEll4:  ell; ps2OnC1; 60; 20; 0: 30: 359
+blocks:
+  blkEll1:
+    - ssEll1; fill, royalblue, 0.4; stroke, 1, black;
+    - psLn1; 2; black;
+    - line; ln1; -220; 220; ||| stroke,1, black; dash; 3,3;
+    - c1; stroke,1, black; dash, 3,3; fill, none;
+    - ssEll3; fill, magenta, 0.4; stroke, 1, black;
+    - psOnC1; 6; black;
+    - ssEll3a; fill, magenta, 0.2; stroke, 1, black;
+    - circ; c1.40; 6; ||| fill, yellow;
+  blkEll2:
+    - ssEll2; fill, none; stroke, 2, black;
+    - c1; stroke,1, black; dash, 3,3; fill, none;
+    - ssEll4; fill, yellow; stroke, 1, black;
+    - ps2OnC1; 6; black;
+    - circ; p0; 4 ||| fill, red;
+draw:
+  - blkEll1;
+  - blkEll2; move; 0, 800

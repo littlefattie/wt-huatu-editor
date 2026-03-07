@@ -1,0 +1,65 @@
+# This is an example demonstrating how to make **Bezier2 Series**.
+
+vars:
+  w: 300
+  d: w/3
+points:
+  p1: -d, 0;
+  p2: 0,d;
+
+shapes:
+  lnYpX: line; 0,0; -45; 0; w * 0.7;
+  ls2: line; lnYpX.e; 100; 300; 100;
+
+pointSeries:
+  ps1: lnYpX; 0.2: 0.2: 1
+  psMarks: p1; p2; lnYpX.e;
+  ps2: ls2; 0.2: 0.2: 1
+
+shapeSeries:
+  ssB2:  b2; p1; ps1; p2;
+  ssB2a: b2; p1; ps1; ps2;
+
+blocks:
+  refCoordinates:
+    - line; 0,0;   0; -w/2; w/2; ||| stroke, 1, grey; 
+      dash; 3,3; marker, arrow1;
+    - line; 0,0; -90; -w/2; w/2; ||| stroke, 1, grey; 
+      dash; 3,3; marker, arrow1;
+  blkB2:
+    - refCoordinates;
+    - line; p1; lnYpX.e; ||| stroke, 1, aqua;
+    - line; p2; lnYpX.e; ||| stroke, 1, aqua;
+    - line; p1; ps1[1]; ||| stroke,0.5, magenta;
+    - line; p2; ps1[1]; ||| stroke,0.5, magenta;
+    - line; p1; ps1[2]; ||| stroke,0.5, magenta;
+    - line; p2; ps1[2]; ||| stroke,0.5, magenta;
+    - line; p1; ps1[3]; ||| stroke,0.5, magenta;
+    - line; p2; ps1[3]; ||| stroke,0.5, magenta;
+    - line; p1; ps1[4]; ||| stroke,0.5, magenta;
+    - line; p2; ps1[4]; ||| stroke,0.5, magenta;
+    - ssB2; fill,royalblue, 0.2; stroke, 1, black;
+    - ps1; 3; blue;
+    - psMarks; 3; magenta;
+    - label; 0, w/2; anchor; tm; w; 180; h; 50; ||| Starting and Ending points are fixed, the control point are series
+  blkB2a:
+    - refCoordinates;
+    - line; p1; lnYpX.e; ||| stroke, 1, aqua;
+    - line; ps2[1]; lnYpX.e; ||| stroke, 1, aqua;
+    - line; p1; ps1[1]; ||| stroke,0.5, magenta;
+    - line; ps2[1]; ps1[1]; ||| stroke,0.5, magenta;
+    - line; p1; ps1[2]; ||| stroke,0.5, magenta;
+    - line; ps2[2]; ps1[2]; ||| stroke,0.5, magenta;
+    - line; p1; ps1[3]; ||| stroke,0.5, magenta;
+    - line; ps2[3]; ps1[3]; ||| stroke,0.5, magenta;
+    - line; p1; ps1[4]; ||| stroke,0.5, magenta;
+    - line; ps2[4]; ps1[4]; ||| stroke,0.5, magenta;
+    - ssB2a; fill,royalblue, 0.2; stroke, 1, black;
+    - ps1; 3; blue;
+    - ps2; 3; magenta;
+    - circ; p1; 3; ||| fill, magenta;
+    - label; 0, w/2; anchor; tm; w; 180; h; 50; ||| starting point is fixed, control point and end point are series
+
+draw:
+  - blkB2;
+  - blkB2a; move; w*1.1, 0;

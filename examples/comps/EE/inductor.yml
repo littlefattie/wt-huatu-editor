@@ -1,0 +1,57 @@
+# This is the commonly used Inductor (simple coil) symbol in EE schematics, You can adjust
+# the color or dimension as your requirements.
+
+# 电子电路电路图中常用的电感符号（简单线圈），你可以按照你自己的需要调整相关尺寸或颜色
+
+# --- Input Vars ------
+inputVars:
+  lineWidth: 4
+  color: cc
+  dsn: L?
+  value: 1uH
+
+# --- Vars ------
+vars:
+  sw: $lineWidth
+  wAll: sw * 24
+  wBody: sw * 16
+  hBody: sw * 3.6
+  wGate: wBody / 4
+
+# --- Points ------
+points:
+  p0: (0, 0)
+  p1: -wAll / 2, 0
+  p2:  wAll / 2, 0
+  pL2: -wGate * 2, 0
+  pL1: -wGate, 0
+  pR1:  wGate, 0
+  pR2:  wGate * 2, 0
+
+# --- Shapes ------
+shapes:
+  handL: line; p1; pL2;
+  b3GateL2: b3; pL2; pL2.x, pL2.y - hBody; pL1.x, pL1.y - hBody; pL1;
+  b3GateL1: b3; pL1; pL1.x, pL1.y - hBody; p0.x,  p0.y  - hBody; p0;
+  b3GateR1: b3; p0;  p0.x,  p0.y  - hBody; pR1.x, pR1.y - hBody; pR1;
+  b3GateR2: b3; pR1; pR1.x, pR1.y - hBody; pR2.x, pR2.y - hBody; pR2;
+  handR: line; pR2; p2;
+
+paths:
+  bars:
+    - handL
+    - b3GateL2
+    - b3GateL1
+    - b3GateR1
+    - b3GateR2
+    - handR
+
+# --- Draw --------
+draw:
+  - bars; stroke, $color, sw; linecap; round; linejoin; round; fill, none;
+  - label; at;0, -hBody; offset; 0, -2; anchor; bm; w; sw * 8; h; 24;  ||| $dsn
+  - label; at;p0; offset; 0,  2; anchor; tm; w; wAll * 0.96; h; 24;   ||| $value
+
+ports:
+  - 1; p1; -180; 0
+  - 2; p2;    0; 0

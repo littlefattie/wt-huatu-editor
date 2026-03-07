@@ -1,0 +1,39 @@
+# This is the commonly used triangle Ground sign in EE schematics.
+
+# 电子电路电路图中常用的三角形接地符号，可随意调用
+
+# --- Input Vars ------
+inputVars:
+  lineWidth: 4
+  color: cc
+  fillColor: none
+  tag: GND
+
+# --- Vars ------
+vars:
+  sw: $lineWidth
+  wTri: sw * 11
+  hTri: sw * 4.4
+  hBarV: sw * 4
+
+# --- Points ------
+points:
+  p0: (0, 0)
+  p1: p0.x, p0.y + hBarV
+  p2: p1.x, p1.y + hTri
+  pLabel: p2.x, p2.y + sw
+
+# --- Shapes ------
+shapes:
+  tri1: tri; p1.x - wTri / 2, p1.y; p1.x + wTri / 2, p1.y; p2
+
+  barV: line; p0 ; p0.x, p0.y + hBarV;
+
+# --- Draw --------
+draw:
+  - barV; stroke, sw, $color; linecap; round
+  - tri1; stroke, sw, $color; linejoin; round; fill, $fillColor;
+  - label; at;pLabel; anchor; tm; w; wTri * 2; h; 20;  ||| $tag
+
+ports:
+  - p; p0; 90; 0

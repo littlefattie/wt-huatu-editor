@@ -1,0 +1,87 @@
+# This is the exmaple introduced in the official docs illustrating how to use shape transforming methods (move and rotate) to duplicate shapes.
+
+vars:
+  # Outer circle of the 5-angle regular star
+  rStar: 80
+  # Calculate the radius of the inner circle
+  rStar2: rStar * dcos(72) / dcos(36)
+  rCenters: 4 * rStar
+points:
+  p0: 0,0
+
+shapes:
+  # The reference circles
+  cStar:  circ; p0; rStar;
+  cStar2: circ; p0; rStar2;
+  cCenters: circ; p0; rCenters;
+
+pointSeries:
+  # Outer vertices of the star
+  psStar:  cStar; 270 : -72 : 270 - 4 * 72
+  # Inner vertices of the star
+  psStar2: cStar2; 270 - 36 : -72 : 270 - 4 * 72 -36
+  # centers of the stars, on the large circle
+  psCenters: cCenters; 0: 360 / 6 : 360
+
+shapes2:
+  # Make the star, it is an polygon actually
+  star: plg; psStar[1]; psStar2[1]; psStar[2]; psStar2[2];
+        psStar[3]; psStar2[3]; psStar[4]; psStar2[4];
+        psStar[5]; psStar2[5];
+  # Move along x-axis
+  starMoveX: movex; star; rCenters / 2
+  # Move along y-axis
+  starMoveY: movey; star; -rCenters * 1.2
+  # moveby: both X and Y axis
+  # Please know that, the offset here is provided as a point, but it should
+  # be offsets, it is OK and not ambiguous because the reference center point is (0,0)
+  # the location equals offsets, please know the logical difference in your own case
+  starMove1: move; star; psCenters[1]
+  starMove2: move; star; psCenters[2]
+  starMove3: move; star; psCenters[3]
+  starMove4: move; star; psCenters[4]
+  starMove5: move; star; psCenters[5]
+  starMove6: move; star; psCenters[6]
+  # rotate: after translate, we rotate the stars at their own center
+  starRot1: rotate; starMove1; -90 + 60 * 0;  psCenters[1];
+  starRot2: rotate; starMove2; -90 + 60 * 1;  psCenters[2];
+  starRot3: rotate; starMove3; -90 + 60 * 2;  psCenters[3];
+  starRot4: rotate; starMove4; -90 + 60 * 3;  psCenters[4];
+  starRot5: rotate; starMove5; -90 + 60 * 4;  psCenters[5];
+  starRot6: rotate; starMove6; -90 + 60 * 5;  psCenters[6];
+
+jobs:
+  moveby:
+    - cCenters; fill,none; stroke,1, grey; dash; 3,3;
+    - star; fill, grey, 0.3; stroke, black, 1; dash; 2,2;
+    - starMove1; fill, red, 0.4; stroke, black, 1;
+    - starMove2; fill, red, 0.4; stroke, black, 1;
+    - starMove3; fill, red, 0.4; stroke, black, 1;
+    - starMove4; fill, red, 0.4; stroke, black, 1;
+    - starMove5; fill, red, 0.4; stroke, black, 1;
+    - starMove6; fill, red, 0.4; stroke, black, 1;
+    - psCenters; 3; black;
+    - circ; p0; 3 ||| fill, magenta;
+  rotate:
+    - cCenters; fill,none; stroke,1, grey; dash; 3,3;
+    - star; fill, grey, 0.3; stroke, black, 1; dash; 2,2;
+    - starRot1; fill, red, 0.4; stroke, black, 1;
+    - starRot2; fill, red, 0.4; stroke, black, 1;
+    - starRot3; fill, red, 0.4; stroke, black, 1;
+    - starRot4; fill, red, 0.4; stroke, black, 1;
+    - starRot5; fill, red, 0.4; stroke, black, 1;
+    - starRot6; fill, red, 0.4; stroke, black, 1;
+    - psCenters; 3; black;
+    - circ; p0; 3 ||| fill, magenta;
+    - line; psCenters[1]; p0; ||| stroke,0.5, cyan;
+    - line; psCenters[2]; p0; ||| stroke,0.5, cyan;
+    - line; psCenters[3]; p0; ||| stroke,0.5, cyan;
+    - line; psCenters[4]; p0; ||| stroke,0.5, cyan;
+    - line; psCenters[5]; p0; ||| stroke,0.5, cyan;
+    - line; psCenters[6]; p0; ||| stroke,0.5, cyan;
+
+draw:
+  - cCenters; fill,none; stroke,1, grey; dash; 3,3;
+  - star; fill, grey, 0.3; stroke, black, 1; dash; 2,2;
+  - starMoveX; fill, red, 0.3; stroke, black,1;
+  - starMoveY; fill, green, 0.3; stroke, black,1;

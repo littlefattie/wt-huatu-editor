@@ -1,0 +1,61 @@
+# This is the commonly used Schottky Diode symbol in EE schematics, You can adjust
+# the color or dimension as your requirements.
+
+# 电子电路电路图中常用的肖特基二极管符号，你可以按照你自己的需要调整相关尺寸或颜色
+
+# --- Input Vars ------
+inputVars:
+  lineWidth: 4
+  color: cc
+  markFill: none
+  dsn: D?
+  partNo: [[EMPTY]]
+
+# --- Vars ------
+vars:
+  sw: $lineWidth
+  wAll: sw * 24
+  wHand: sw * 8
+  hBar: sw * 10
+  hTri: hBar * 0.92
+  xBar: wAll/2 - wHand
+  extrude: sw * 1.414
+  wS: sw * 1.666
+
+
+# --- Points ------
+points:
+  p0: (0, 0)
+  pA: -wAll / 2, 0
+  pK:  wAll / 2, 0
+  pSN1: xBar, -hBar/2
+  pSN2: pSN1.x + wS, pSN1.y
+  pSN3: pSN2.x, pSN2.y + extrude
+  pSS1: xBar,  hBar/2
+  pSS2: pSS1.x - wS, pSS1.y
+  pSS3: pSS2.x, pSS2.y - extrude
+
+# --- Shapes ------
+shapes:
+  handL: line; pA; -xBar, 0;
+  handR: line; pK;  xBar, 0;
+  barH:  line; xBar, -hBar / 2; xBar, hBar/2;
+  signS: line; pSN3; pSN2; pSN1; pSS1; pSS2; pSS3;
+  mark:  tri; -xBar, -hTri/2; -xBar, hTri/2; xBar, 0;
+
+paths:
+  bars:
+    - handL
+    - handR
+    - ...signS
+
+# --- Draw --------
+draw:
+  - bars; stroke, $color, sw; linecap; round; linejoin; round; fill, none;
+  - mark; stroke, $color, sw; linecap; round; linejoin; round; fill, $markFill;
+  - label; at;p0.x, pSN1.y - 2; anchor; bm; w; sw * 8; h; 24;  ||| $dsn
+  - label; at;p0.x, pSS1.y + 2; anchor; tm; w; wAll * 0.96; h; 24;   ||| $partNo
+
+ports:
+  - A; pA; 180; 0
+  - K; pK;   0; 0

@@ -1,0 +1,73 @@
+# This is the commonly used Inductor (with iron core) symbol in EE schematics, You can adjust
+# the color or dimension as your requirements.
+
+# 电子电路电路图中常用的电感符号（铁芯），你可以按照你自己的需要调整相关尺寸或颜色
+
+# --- Input Vars ------
+inputVars:
+  lineWidth: 4
+  color: cc
+  dsn: L?
+  value: 1uH
+
+# --- Vars ------
+vars:
+  sw: $lineWidth
+  wAll: sw * 28
+  wBody: sw * 20
+  hBody: sw * 3.6
+  wGate: wBody / 5
+  yCore: -hBody - sw*1
+  yCore2: yCore - sw * 1.72
+
+# --- Points ------
+points:
+  p0: (0, 0)
+  p1: -wAll / 2, 0
+  p2:  wAll / 2, 0
+  pL3: -wGate * 2.5, 0
+  pL2: -wGate * 1.5, 0
+  pL1: -wGate * 0.5, 0
+  pR1:  wGate * 0.5, 0
+  pR2:  wGate * 1.5, 0
+  pR3:  wGate * 2.5, 0
+  pL3C: pL3.x, pL3.y - hBody
+  pL2C: pL2.x, pL2.y - hBody
+  pL1C: pL1.x, pL1.y - hBody
+  pR1C: pR1.x, pR1.y - hBody
+  pR2C: pR2.x, pR2.y - hBody
+  pR3C: pR3.x, pR3.y - hBody
+
+# --- Shapes ------
+shapes:
+  handL: line; p1; pL3;
+  b3GateL2: b3; pL3; pL3C; pL2C; pL2;
+  b3GateL1: b3; pL2; pL2C; pL1C; pL1;
+  b3GateM:  b3; pL1; pL1C; pR1C; pR1;
+  b3GateR1: b3; pR1; pR1C; pR2C; pR2;
+  b3GateR2: b3; pR2; pR2C; pR3C; pR3;
+  handR: line; pR3; p2;
+  coreLine1: line; -wBody/2, yCore; wBody/2, yCore;
+  coreLine2: line; -wBody/2, yCore2; wBody/2, yCore2;
+
+paths:
+  bars:
+    - handL
+    - b3GateL2
+    - b3GateL1
+    - b3GateM
+    - b3GateR1
+    - b3GateR2
+    - handR
+    - coreLine1
+    - coreLine2
+
+# --- Draw --------
+draw:
+  - bars; stroke, $color, sw; linecap; round; linejoin; round; fill, none;
+  - label; at;coreLine2.m; offset; 0, -2; anchor; bm; w; sw * 8; h; 24;  ||| $dsn
+  - label; at;p0; offset; 0,  2; anchor; tm; w; wAll * 0.96; h; 24;   ||| $value
+
+ports:
+  - 1; p1; -180; 0
+  - 2; p2;    0; 0

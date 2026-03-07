@@ -1,0 +1,36 @@
+# This is an example demonstrating how to make **Triangle Series**.
+
+# 文档中展示如何构建**三角形序列**的示例。
+
+points:
+  p0: -230, 0
+  p1: p0.x + 180, p0.y + 20
+shapes:
+  tri0: tri; -50, -240; -300, 40; 220, 130;
+  ls1: line; p0; -62; 20; 300;
+  ls2: line; p0; -32; 18; 400;
+
+pointSeries:
+  psA: tri0; 1; 0.1 : 0.1 : 0.9
+  psB: tri0; 2; 0.1 : 0.1 : 0.9
+  psC: tri0; 3; 0.1 : 0.1 : 0.9
+  psLs1: ls1; 0.2 : 0.2 : 1
+  psLs2: ls2; 0.2 : 0.2 : 1
+shapeSeries:
+  ssTri1: tri; psA; psB; psC;
+  ssTri2: triangle; psLs1; p1; psLs2;
+blocks:
+  blkTri1:
+    - ssTri1; fill, magenta, 0.2; stroke, 1, black;
+    - tri0; fill, none; stroke, 2, black;
+  blkTri2:
+    - line; p0; ls1.deg; -20; ls1.len + 40; ||| stroke, 1, black; dash, 3,3;
+    - line; p0; ls2.deg; -20; ls2.len + 40; ||| stroke, 1, black; dash, 3,3;
+    - circ; p0; 4; ||| fill, red;
+    - ssTri2; fill, blue, 0.2; stroke, 1, grey;
+    - psLs1; 3; blue;
+    - psLs2; 3; blue;
+    - circ; p1; 4; ||| fill, red, 0.4;
+draw:
+  - blkTri1;
+  - blkTri2; move; 0, 400;

@@ -1,0 +1,58 @@
+# This is the commonly used Resistor symbol in EE schematics, You can adjust
+# the color or dimension as your requirements.
+
+# 电子电路电路图中常用的电阻符号（折线型），你可以按照你自己的需要调整相关尺寸或颜色
+
+# --- Input Vars ------
+inputVars:
+  lineWidth: 4
+  color: cc
+  dsn: R?
+  value: 1k
+
+# --- Vars ------
+vars:
+  sw: $lineWidth
+  wAll: sw * 20
+  wBody: sw * 12
+  hBody: sw * 4
+  wBodyLine: wBody / 12
+  xStrait: wBody / 2 + (wAll - wBody) / 4
+
+# --- Points ------
+points:
+  p0: (0, 0)
+  p1: -wAll / 2, 0
+  p2:  wAll / 2, 0
+  pB1: -wBody/2, 0
+  pB2:  wBody/2, 0
+  pBm1: -wBodyLine * 5, -hBody/2
+  pBm2: -wBodyLine * 3,  hBody/2
+  pBm3: -wBodyLine * 1, -hBody/2
+  pBm4:  wBodyLine * 1,  hBody/2
+  pBm5:  wBodyLine * 3, -hBody/2
+  pBm6:  wBodyLine * 5,  hBody/2
+  
+
+# --- Shapes ------
+shapes:
+  handL: line; p1; -xStrait, 0;
+  handR: line; p2;  xStrait, 0;
+  body: rect; bycenter; p0; wBody;hBody;
+  lines: line; -xStrait, 0; pB1; pBm1; pBm2; pBm3; pBm4; pBm5; pBm6; pB2; xStrait, 0;
+
+paths:
+  bars:
+    - handL
+    - handR
+
+# --- Draw --------
+draw:
+  - bars; stroke, $color, sw; linecap; round; linejoin; round; fill, none; 
+  - label; at;body.n; offset; 0, -2; anchor; bm; w; sw * 8; h; 24;  ||| $dsn
+  - label; at;body.s; offset; 0,  2; anchor; tm; w; wAll * 0.96; h; 24;   ||| $value
+  - lines; stroke, $color, sw; fill,none; linejoin; round;
+
+ports:
+  - 1; p1; -180; 0
+  - 2; p2;    0; 0

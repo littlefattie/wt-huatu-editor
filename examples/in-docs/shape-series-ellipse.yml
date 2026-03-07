@@ -1,0 +1,48 @@
+
+# 文档中展示如何构建**椭圆序列**的示例。
+
+points:
+  p0: 0,0
+
+shapes:
+  ln1: line; p0; -42
+  c1:  circ; p0; 300
+
+pointSeries:
+  # 在直线上等距取点
+  psLn1:   ln1; -200 : 50 : 200
+  # 在圆上随机按角度取点
+  psOnC1:  c1; 90, 130, 160, 180, 222, 255, 300, 333; 
+  # 在圆上等角距取点
+  ps2OnC1: c1; 0 : 30 : 359
+
+shapeSeries:
+  # 圆心是点列，Rx 和 Ry 不变，旋转角变化，是数列
+  ssEll1:  ell; psLn1; 20; 12; -80: 20: 80;
+  # 圆心不变， Rx 和 Ry 变化是数列，旋转角变化，是数列
+  ssEll2:  ell; p0; 20: 20: 100; 14: 10: 70; -60: 20: 90;
+  # 圆心变化，Rx, Ry变化，旋转角不变，且为0
+  ssEll3:  ell; psOnC1; 20: 12: 104; 104: 12: 20; 
+  # 圆心不变，Rx, Ry变化，旋转角不变，且为0
+  ssEll3a: ell; c1.40; 20: 12: 104; 104: 12: 20; 
+  # 圆心为点列，Rx, Ry不变，旋转角变化，但和圆心在圆上的分布角相同
+  ssEll4:  ell; ps2OnC1; 60; 20; 0: 30: 359
+blocks:
+  blkEll1:
+    - ssEll1; fill, royalblue, 0.4; stroke, 1, black;
+    - psLn1; 2; black;
+    - line; ln1; -220; 220; ||| stroke,1, black; dash; 3,3;
+    - c1; stroke,1, black; dash, 3,3; fill, none;
+    - ssEll3; fill, magenta, 0.4; stroke, 1, black;
+    - psOnC1; 6; black;
+    - ssEll3a; fill, magenta, 0.2; stroke, 1, black;
+    - circ; c1.40; 6; ||| fill, yellow;
+  blkEll2:
+    - ssEll2; fill, none; stroke, 2, black;
+    - c1; stroke,1, black; dash, 3,3; fill, none;
+    - ssEll4; fill, yellow; stroke, 1, black;
+    - ps2OnC1; 6; black;
+    - circ; p0; 4 ||| fill, red;
+draw:
+  - blkEll1;
+  - blkEll2; move; 0, 800

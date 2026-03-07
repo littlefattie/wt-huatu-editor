@@ -1,0 +1,44 @@
+# This is an example demonstrating how to make **Arc Series**.
+
+# 文档中展示如何构建**弧线序列**的示例。
+
+
+vars:
+  Rmax: 150
+points:
+  p0: 0,0
+
+shapeSeries:
+  ssCirc: circ; p0; Rmax/8: Rmax/10: Rmax
+  ssArc1: arc; ssCirc; 222; 333; cw
+  ssArc2: arc; ssCirc; 0; 30: 15: 300; cw;
+  ssArc3: arc; ssCirc; 0: 10: 200; 30: 20: 360; cw;
+  ssEll:  ell; p0; 
+    Rmax * 0.75 / 4: Rmax * 0.75 / 10: Rmax * 0.75;
+    Rmax / 4: Rmax / 10: Rmax; 
+    30: 15: 300;
+  ssArc4: arc; ssEll; 100; 120: 20: 300; ccw;
+
+blocks:
+  blkCircRef:
+    - ssCirc; fill, none; stroke, 1, black; dash, 3,3;
+  blkArc1:
+    - blkCircRef
+    - ssArc1; fill, none; stroke, 6, black; opaque; 0.4;
+  blkArc2:
+    - blkCircRef
+    - ssArc2; fill, none; stroke, 6, red; opaque; 0.4;
+  blkArc3:
+    - blkCircRef
+    - ssArc3; fill, none; stroke, 6, magenta; opaque; 0.4;
+  blkEllRef:
+    - ssEll;  fill, none; stroke, 1, black; dash, 3,3;
+  blkArc4:
+    - blkEllRef
+    - ssArc4; fill, none; stroke, 6, aqua; opaque, 0.4;
+  
+draw:
+  - blkArc1
+  - blkArc2; move; Rmax * 2.2, 0;
+  - blkArc3; move; 0, Rmax * 2.2
+  - blkArc4; move; Rmax * 2.2, Rmax * 2.2

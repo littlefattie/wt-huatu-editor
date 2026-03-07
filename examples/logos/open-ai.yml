@@ -1,0 +1,189 @@
+# The simulation of designing OpenAI's logo
+
+vars:
+  rOutArcs: 500
+  rPetal: rOutArcs * 1.11
+  wHexIn: rOutArcs * 0.6
+  wPetal: rOutArcs * 0.25
+  wLine1: wPetal 
+  wLine2: wPetal * 0.75
+  rPetalIn: rPetal - wPetal
+  degP1: -45
+  degDelta: 60
+points:
+  p0: 0,0
+  pVleft: p0.x - wHexIn * sqrt(3) / 2, p0.y
+
+
+shapes:
+  c0: circ; p0; rOutArcs
+  lnV1: line; pVleft; -90
+  #lnV2: line; pVleft.x - wLine2, pVleft.y; -90
+  hexIn: plgn; 6; p0; wHexIn; 30
+
+cpoints:
+  pcP1: c0; degP1
+  pcP2: c0; degP1 + degDelta
+  pcP3: c0; degP1 + degDelta * 2
+  pcP4: c0; degP1 + degDelta * 3
+  pcP5: c0; degP1 + degDelta * 4
+  pcP6: c0; degP1 + degDelta * 5
+  pVleft2: lnV1; wHexIn / 2 + wLine2 / sqrt(3) * 2
+
+shapes2:
+  ln120: line; pVleft2; 330
+  cP1: circ; pcP1; rPetal
+  cP2: circ; pcP2; rPetal
+  cP3: circ; pcP3; rPetal
+  cP4: circ; pcP4; rPetal
+  cP5: circ; pcP5; rPetal
+  cP6: circ; pcP6; rPetal
+  cP1i: circ; pcP1; rPetalIn
+  cP2i: circ; pcP2; rPetalIn
+  cP3i: circ; pcP3; rPetalIn
+  cP4i: circ; pcP4; rPetalIn
+  cP5i: circ; pcP5; rPetalIn
+  cP6i: circ; pcP6; rPetalIn
+  cP6m: circ; pcP6; rPetal - wPetal / 0.8
+  cP1m: circ; pcP1; rPetal - wPetal / 0.8
+
+xpoints2:
+  xp1: cP1; cP2; e;
+  xp2: cP2; cP3; s;
+  xp3: cP3; cP4; s;
+  xp4: cP4; cP5; w;
+  xp5: cP5; cP6; w;
+  xp6: cP6; cP1; n;
+  xp1i6m: cP1i; cP6m; n;
+  xp2i1m: cP2i; cP1m; n;
+
+pointSeries2:
+  outPoints: xp1; xp2; xp3; xp4; xp5; xp6;
+
+shapes3:
+  ln120t: line; xp1i6m; 150
+  lnXp1: line; xp2i1m.x, xp2i1m.y - wLine1 / dcos(30); 210
+
+xpoints3:
+  xpLnO1: lnV1; ln120t
+  xpLnXp1: ln120; lnXp1
+  xp1iLnXp1: lnXp1; cP1i; e;
+
+pointSeries3:
+  psXps: xp1i6m; xpLnO1;pVleft2; xpLnXp1;xp1iLnXp1;
+shapes4:
+  pln1: line; xp1i6m; xpLnO1;pVleft2; xpLnXp1;xp1iLnXp1;
+
+paths:
+  cut1:
+    #- line; xp1i6m; xpLnO1;
+    #- line; xpLnO1; pVleft2;
+    #- line; pVleft2; xpLnXp1;
+    #- line; xpLnXp1; xp1iLnXp1;
+    - ...pln1; radius; 40, 0, 80;
+    - arc; xp1iLnXp1; rPetalIn; rPetalIn; 0; ccw; small; xp1i6m;
+    - close
+  cut2: rotate; cut1; 60; p0;
+  cut3: rotate; cut2; 60; p0;
+  cut4: rotate; cut3; 60; p0;
+  cut5: rotate; cut4; 60; p0;
+  cut6: rotate; cut5; 60; p0;
+  outLine:
+    - arc; xp1; rPetal; rPetal; 0; cw; small; xp2;
+    - arc; xp2; rPetal; rPetal; 0; cw; small; xp3;
+    - arc; xp3; rPetal; rPetal; 0; cw; small; xp4;
+    - arc; xp4; rPetal; rPetal; 0; cw; small; xp5;
+    - arc; xp5; rPetal; rPetal; 0; cw; small; xp6;
+    - arc; xp6; rPetal; rPetal; 0; cw; small; xp1;
+    - close
+  cutOut:
+    - ...outLine;
+    - ...cut1;
+    - ...cut2;
+    - ...cut3;
+    - ...cut4;
+    - ...cut5;
+    - ...cut6;
+    - ...hexIn;ccw;
+blocks:
+  petalCircls:
+    - cP1;
+    - cP2;
+    - cP3;
+    - cP4;
+    - cP5;
+    - cP6;
+  rotateAsTransform:
+    - cut1;
+    - cut1; rotate; 60; at; p0;
+    - cut1; rotate; 120; at; p0;
+    - cut1; rotate; 180; at; p0;
+    - cut1; rotate; 240; at; p0;
+    - cut1; rotate; 300; at; p0;
+  rotatedPaths:
+    - cut1;
+    - cut2;
+    - cut3;
+    - cut4;
+    - cut5;
+    - cut6;
+draw:
+  - outLine; fill, black, 0.3;
+  - c0;  fill, none; stroke,1, grey;
+  - petalCircls; stroke, 1, red; dash; 3,3; fill, none;
+  - hexIn; fill; red; 0.3
+  - cP1; fill, blue, 0.2
+  - cP1i; fill, maroon, 0.2
+  - cP6i; fill, maroon, 0.2
+  - outPoints; 6; red;
+  - cut1; fill, black, 0.4
+  - cut1; fill, black, 0.4;rotate; 60; at; p0;
+  - circ; xp1i6m; 5; ||| fill, cyan;
+  - circ; xp2i1m; 5; ||| fill, cyan;
+jobs:
+  refs:
+    - outLine; fill, black, 0.3;
+    - cut1; fill, yellow, 0.4;
+    - cut2; fill, yellow, 0.4;
+    - arc; cP1; 20; 250; ccw; ||| fill, none; stroke, 2, red; dash; 6,6;
+    - arc; cP1i; 12; 240; ccw; ||| fill, none; stroke, 2, black; dash; 6,6;
+    - arc; cP2i; -65; 65; cw; ||| fill, none; stroke, 2, black; dash; 6,6;
+    #- cP6i; fill, none; stroke, 2, black; dash; 6,6;
+    - arc; cP6m; 280; 340; cw; ||| fill, none; stroke, 2, blue; dash; 6,6;
+    - arc; cP1m; -52; 30;cw; ||| fill, none; stroke, 2, blue; dash; 6,6;
+    - circ; pcP1; 10; ||| fill, blue;
+    - circ; pcP2; 10; ||| fill, blue;
+    - circ; pcP6; 10; ||| fill, blue;
+    - circ; p0; 10; ||| fill,blue;
+    - line; pVleft; 90; -rOutArcs * 1.22; rOutArcs * 0.4; ||| stroke,black, 2; dash; 6,6;
+    - circ; pVleft; 4 ||| fill, red;
+    - circ; pVleft2; 4 ||| fill, red;
+    - circ; xp1i6m; 6 ||| fill, red;
+    - line; xp2i1m; -90; -40; 200; ||| stroke, black, 3;dash; 6,6;
+    - circ; xp2i1m; 6 ||| fill, red;
+    - circ; lnXp1.a; 6 ||| fill, red;
+    - line; lnXp1; -100; 500; ||| stroke, 3, cyan; dash; 6,6;
+    - line; ln120; -60; 800; ||| stroke, 3, cyan; dash; 6,6;
+    - line; ln120t; 550; ||| stroke, 3, cyan; dash; 6,6;
+    - cutOut; fill, red, 0.2;
+    - psXps; 8; magenta;
+    - outPoints; 12; black;
+    - c0; fill, none; stroke, 1, black; dash; 6.6;
+    - dimmark; pcP2; cP2.340; left; nostartbar; noendbar; label; $R$; nostartarrow; gap;0; linepos;0; linewidth; 3; textsize; 25; lw; 120; lh; 30;
+    - dimmark; pcP2; cP2i.15; left; nostartbar; noendbar; label; $R-w$; nostartarrow; gap;0; linepos;0; linewidth; 3; textsize; 25; lw; 120; lh; 30;
+    - dimmark; cP2i.15; cP2.15; left; nostartbar; noendbar; label; $w$; gap;0; linepos;0; linewidth; 3; textsize; 25; lw; 120; lh; 30;
+    #- dimmark; pcP1; cP1.340; left; nostartbar; noendbar; label; $R$; nostartarrow; gap;0; linepos;0; linewidth; 3; textsize; 25; lw; 120; lh; 30;
+    - dimmark; pcP1; cP1i.300; left; nostartbar; noendbar; label; $R-w$; nostartarrow; gap;0; linepos;0; linewidth; 3; textsize; 25; lw; 120; lh; 30;
+    - dimmark; pcP1; cP1m.330;right; nostartbar; noendbar; label; $R-1.25w$; nostartarrow; gap;0; linepos;0; linewidth; 3; textsize; 25; lw; 120; lh; 30;
+    #- dimmark; cP1i.15; cP2.15; left; nostartbar; noendbar; label; $w$; gap;0; linepos;0; linewidth; 3; textsize; 25; lw; 120; lh; 30;
+  layered:
+    - outLine; fill, black;
+    - rotateAsTransform; fill, white;
+    - hexIn; fill, white;
+  layered2:
+    - outLine; fill, red;
+    - rotatedPaths; fill, white;
+    - hexIn; fill, white;
+  logoOnly:
+    - cutOut; fill, blue;
+  

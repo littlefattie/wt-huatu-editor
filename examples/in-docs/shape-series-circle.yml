@@ -1,0 +1,37 @@
+# 文档中展示如何构建**圆序列**的示例。
+
+
+shapes:
+  c1: circ; 0,0; 120;
+pointSeries:
+  psC1: c1; 0: 25: 280;
+  psRandom: c1.25; c1.140; c1.230; c1.c; -50, c1.r / 2;
+shapeSeries:
+  ssC1: circ; psC1; 2: 1: 10; # 图形总数取决于数量最少的那个序列
+  ssC2: circ; psC1; 4;        # 图形总数取决于psC1的点的个数，
+                              # 如果序列中只有一个数，将复制扩展为
+                              # 与其他参数序列中个数最少的那个一样多
+  ssC3: circ; c1.c; c1.r / 2: c1.r/8: c1.r
+  ssC4: circ; psRandom; 4, 15, 7, 12, 6
+
+blocks:
+  blkC1:
+    - c1; stroke, 1, black; dash, 3,3; fill, none;
+    - ssC1; fill, red;
+    - label; c1.c; w; 150; h; 40; anchor; center; ||| 圆心是序列，半径也是序列，不断变大
+  blkC2:
+    - c1; stroke, 1, black; dash, 3,3; fill, none;
+    - ssC2; fill, red;
+    - label; c1.c; w; 150; h; 40; anchor; center; ||| 圆心是序列，半径不变，是恒定值
+  blkC3:
+    - ssC3; fill, none; stroke, 1, red;
+    - label; c1.c; w; 70; h;50; anchor; center; ||| 圆心不变，半径是序列
+  blkC4:
+    - c1; stroke,1, black; dash, 3,3; fill, none;
+    - ssC4; fill, royalblue, 0.6;
+    - label; 0, -c1.r/2.2; w; 140; h;50; anchor; center; ||| 圆心是离散的点序列，半径是离散的数列
+draw:
+  - blkC1
+  - blkC2; move; 260, 0;
+  - blkC3; move; 0, 260;
+  - blkC4; move; 260, 260;

@@ -1,0 +1,47 @@
+# This is the commonly used Resistor symbol in EE schematics, You can adjust
+# the color or dimension as your requirements.
+
+# 电子电路电路图中常用的电阻符号（方框型），你可以按照你自己的需要调整相关尺寸或颜色
+
+# --- Input Vars ------
+inputVars:
+  lineWidth: 4
+  color: cc
+  bodyFill: none
+  dsn: R?
+  value: 1k
+
+# --- Vars ------
+vars:
+  sw: $lineWidth
+  wAll: sw * 20
+  wBody: sw * 10
+  hBody: sw * 4
+
+# --- Points ------
+points:
+  p0: (0, 0)
+  p1: -wAll / 2, 0
+  p2:  wAll / 2, 0
+
+# --- Shapes ------
+shapes:
+  handL: line; p1; -wBody/2, 0;
+  handR: line; p2;  wBody/2, 0;
+  body: rect; bycenter; p0; wBody;hBody;
+
+paths:
+  bars:
+    - handL
+    - handR
+
+# --- Draw --------
+draw:
+  - bars; stroke, $color, sw; linecap; round; linejoin; round; fill, none;
+  - body; stroke, $color, sw; linecap; round; linejoin; round; fill, $bodyFill;
+  - label; at;body.n; offset; 0, -2; anchor; bm; w; sw * 8; h; 24;  ||| $dsn
+  - label; at;body.s; offset; 0,  2; anchor; tm; w; wAll * 0.96; h; 24;   ||| $value
+
+ports:
+  - 1; p1; -180; 0
+  - 2; p2;    0; 0

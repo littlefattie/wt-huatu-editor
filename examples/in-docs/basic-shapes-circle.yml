@@ -1,0 +1,17 @@
+# This is the example, introduced in the basic shapes page of docs, explaining `circle`
+
+# 这是基本图形页面中解释**圆**的示例。
+
+vars:
+  a: 100
+
+points:
+  pC1: (0, 0)
+
+shapes:
+  c1: circle; pC1; a
+
+draw:
+  - c1; stroke; 3, black; fill, none;
+  - dimmark; pC1; c1.320; linewidth; 2; nostartbar; noendbar; noStartArrow; linepos; 0; gap;0; barlen;1; left; label; $r$
+  - circ; c1.c; 3 ||| fill, red;

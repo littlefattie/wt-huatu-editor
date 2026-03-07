@@ -1,0 +1,37 @@
+
+# This is an example demonstrating how to design **Circle Series**.
+
+shapes:
+  c1: circ; 0,0; 120;
+pointSeries:
+  psC1: c1; 0: 25: 280;
+  psRandom: c1.25; c1.140; c1.230; c1.c; -50, c1.r / 2;
+shapeSeries:
+  ssC1: circ; psC1; 2: 1: 10; # count of circles is determined by the series which counts least
+  ssC2: circ; psC1; 4;        # count of circles is determined by count of psC1
+                              # If the series has only element, it will be duplicated
+                              # to the minimal count of other series
+  ssC3: circ; c1.c; c1.r / 2: c1.r/8: c1.r
+  ssC4: circ; psRandom; 4, 15, 7, 12, 6
+
+blocks:
+  blkC1:
+    - c1; stroke, 1, black; dash, 3,3; fill, none;
+    - ssC1; fill, red;
+    - label; c1.c; w; 150; h; 60; anchor; center; ||| Center is series, radius is series and increasing
+  blkC2:
+    - c1; stroke, 1, black; dash, 3,3; fill, none;
+    - ssC2; fill, red;
+    - label; c1.c; w; 150; h; 40; anchor; center; ||| Center is series, radius is fixed
+  blkC3:
+    - ssC3; fill, none; stroke, 1, red;
+    - label; c1.c; w; 100; h;50; anchor; center; ||| Center is fixed, radius is series
+  blkC4:
+    - c1; stroke,1, black; dash, 3,3; fill, none;
+    - ssC4; fill, royalblue, 0.6;
+    - label; 0, -c1.r/2.2; w; 140; h;80; anchor; center; ||| Center is a series of discrete points, radius is a series of discrete numbers
+draw:
+  - blkC1
+  - blkC2; move; 260, 0;
+  - blkC3; move; 0, 260;
+  - blkC4; move; 260, 260;

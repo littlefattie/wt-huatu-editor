@@ -1,0 +1,47 @@
+# This is the default template to create a new `huatu`, and be used as some intuitive example in the introduction page.
+
+# 这是编辑器里开始新设计的默认模板，也是文档中介绍页面的第一个直观示例。
+
+
+# --- Vars ------
+vars:
+  r: 100
+  degAB: datan(0.25/1.25)
+
+# --- Points ------
+points:
+  pA: (0, 0)
+
+# --- Shapes ------
+shapes:
+  lnAB: line; pA; -degAB
+cpoints:
+  pB: lnAB; r
+
+shapes2:
+  cA: circle; pA; r
+  cB: circle; pB; r
+
+xpoints2:
+  pC: cA; cB; n;    # Pick the northern point of the intersections
+  pD: lnAB; cA; w;  # Pick the western
+  pE: lnAB; cB; e;  # Pick the eastern
+
+shapes3:
+  triABC: triangle; pA; pB; pC;
+
+# --- Draw --------
+draw:
+  - cA; fill, none; stroke; 1, cc
+  - cB; fill, none; stroke; 1, cc
+  - triABC; fill, yellow; stroke; 1, cc
+  - circle; pA; 3 ||| fill; grey
+  - circle; pB; 3 ||| fill; grey
+  - circle; pC; 3 ||| fill; grey
+  - circle; pD; 3 ||| fill; grey
+  - circle; pE; 3 ||| fill; grey
+  - label; at; pA; w; 20; h; 22; anchor; mr ||| $A$
+  - label; at; pB; w; 20; h; 22; anchor; ml ||| $B$
+  - label; at; pC; w; 20; h; 22; anchor; bm ||| $C$
+  - label; at; pD; w; 20; h; 22; anchor; tr ||| $D$
+  - label; at; pE; w; 20; h; 22; anchor; bl ||| $E$

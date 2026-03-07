@@ -1,0 +1,61 @@
+# This is the commonly used TL431 symbol used in EE schematics, You can adjust
+# the color or dimension as your requirements.
+
+# 电子电路电路图中常用的基准电压源TL431符号，你可以按照你自己的需要调整相关尺寸或颜色
+
+# --- Input Vars ------
+inputVars:
+  lineWidth: 4
+  color: cc
+  markFill: cc
+  dsn: D?
+  partNo: TL431 # [[EMPTY]]
+
+# --- Vars ------
+vars:
+  sw: $lineWidth
+  hAll: sw * 24
+  hHand: sw * 8
+  wBar: sw * 8
+  wBarTurn: wBar * 0.92
+  hBarTurn: sw * 1.88
+  wTri: wBar * 0.96
+  yBar: -hAll/2 + hHand
+
+# --- Points ------
+points:
+  p0: (0, 0)
+  pA: 0,  hAll / 2
+  pK: 0, -hAll / 2
+  pR: wBar * 0.5 * 2.4, p0.y
+  pBarEnd1:  -wBar / 2, yBar + hBarTurn
+  pBarTurn1: -wBarTurn / 2, yBar
+  pBarTurn2:  wBarTurn / 2, yBar
+  pBarEnd2:   wBar / 2, yBar - hBarTurn
+
+# --- Shapes ------
+shapes:
+  handA: line; pA; 0, -yBar;
+  handK: line; pK; 0,  yBar;
+  handR: line; pR; wTri / 4, pR.y
+  barH:  line; pBarEnd1; pBarTurn1; pBarTurn2; pBarEnd2; # line; yBar, -wBar / 2; yBar, wBar/2;
+  mark:  tri; -wTri/2, -yBar; wTri/2, -yBar; 0, yBar;
+
+paths:
+  bars:
+    - handA
+    - handK
+    - handR
+    - ...barH;
+
+# --- Draw --------
+draw:
+  - bars; stroke, $color, sw; linecap; round; linejoin; round; fill,none;
+  - mark; stroke, $color, sw; linecap; round; linejoin; round; fill, $markFill;
+  - label; at;p0.x - wBar / 2 - 6, p0.y + sw; anchor; mr; w; sw * 8; h; 24; align; right;  ||| $dsn
+  - label; at;wTri/2, -yBar; anchor; tl; w; wBar * 2.2; h; 24; align;left;  ||| $partNo
+
+ports:
+  - A; pA;  90; 0
+  - K; pK; 270; 0
+  - R; pR;   0; 0

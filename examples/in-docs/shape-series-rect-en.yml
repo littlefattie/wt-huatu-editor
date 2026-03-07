@@ -1,0 +1,62 @@
+# This is an example demonstrating how to make **Rectangle Series**.
+
+points:
+  p0: 0, 0
+
+shapes:
+  ln1: line; p0; 160;
+  ln2: line; p0; 112;
+  ln3: line; p0; 52;
+  ls1: line; ln1;  100; 400;
+  ls2: line; ln2;  60; 280;
+  ls3: line; ln3; 60; 400;
+  arc1: arc; p0; 400; 200; 0; 33; 180-33; cw;
+  
+pointSeries:
+  psLs1: ls1; 0 : 0.25 : 1
+  psLs2: ls2; 0 : 0.25 : 1
+  psLs3: ls3; 0 : 0.2  : 1
+  psArc1: arc1; 0.2: 0.15: 1
+
+shapeSeries:
+  # By diagonal points
+  ssLs1: rect; psLs1; psLs2;
+  # By top-left corner and width/height series
+  ssLs3: rect; psLs3; 100:10:10; 60: 5: 20;
+  # By center and width/height
+  ssLsC: rect; bycenter; p0; 160:20:80; 80:20:160;
+  # center and width/height all are series
+  ssRectOnArc: rect; bycenter; psArc1; 160:20:80; 80:20:160;
+  # top-left corner is fixed, width and height are series
+  ssRect1: rect; p0; 100: 10: 20; 80: 8: 16;
+
+blocks:
+  blkRect1:
+    - ssLs1; fill, yellow, 0.6; stroke, 1, black;
+    - line; ln1; 450; -10; ||| stroke, 1, black; dash, 3,3;
+    - line; ln2; 330; -10; ||| stroke, 1, black; dash, 3,3;
+    - ls1; stroke, 8, royalblue; opaque; 0.4;
+    - ls2; stroke, 8, royalblue; opaque; 0.4;
+    - psLs1; 3; red;
+    - psLs2; 3; red;
+    - circ; p0; 5; ||| fill, blue;
+    - ls3; stroke, 8, royalblue; opaque; 0.4;
+    - line; ln3; -10; 450; ||| stroke, 1, black; dash, 3,3;
+    - ssLs3; fill, magenta, 0.4; stroke, 1, black;
+    - psLs3; 3; red;
+    - label; psLs1[5]; w; 180; h; 40; anchor; ml; offset; -20, -80; left;  ||| By diagonal points, all series
+    - label; psLs3[1]; w; 160; h; 52; anchor; bl; offset; 30, -10; left;  ||| By Top-Left corner and width/height, all series
+  blkRect2:
+    - ssLsC;fill, magenta; 0.4; stroke, 1, black;
+    - circ; p0; 3; ||| fill, black;
+    - arc1; stroke, 1, black; dash, 3,3; fill, none;
+    - psArc1; 3; black;
+    - ssRectOnArc; fill, magenta, 0.4; stroke, 1, black;
+    - label; p0.x + 100, p0.y; w; 180; h; 40; anchor; ml; ||| bycenter, center fixed, width/height are series
+    - label; psArc1[3]; w; 180; h; 20; anchor; tm; offset; 0, 80; ||| bycenter, all series
+draw:
+  - blkRect1
+  - blkRect2;  move; -50, 420
+  - ssRect1; fill, magenta, 0.4; stroke, 1, black; move; -350, 380
+  - label; p0.x -350 - 20, p0.y + 380 - 60; w; 140; h; 60; ||| Top-left corner fixed, width/height are series
+  

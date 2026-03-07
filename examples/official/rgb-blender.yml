@@ -1,0 +1,181 @@
+# This is an example showing at `wt-huatu.org` home page to illustrate the principle of the language or modelling concept of wt-huatu lib.
+# Following code will explain how it is designed and the logic considerations
+# 这是在`wt-huatu.org`主页展示的基本样例，用以展示wt-huatu这个库或者图形设计语言如何进行设计和使用。
+# 下面的示例和代码将引导您进一步了解。
+
+# Define Variables / 定义变量
+vars:
+  r: 200            # Radius of the circle
+  d: r * 0.6        # Radius of the circle where the centers of the r/g/b circles will be placed symmetrically
+
+points:
+  # Here, it is the intuitive method to resolve centers of the r/b/b circles
+  pCr: (-d * dcos(30), d * dsin(30))
+  pCg: ( d * dcos(30), d * dsin(30))
+  pCb: (0, -d)
+
+shapes:
+  # Here, it could be treated as another way to resolve the centers of r/g/b circles
+  # At first, we define a small circle where all the centers will locate on it
+  # ane then, they at different positions/degrees. And then the circles will be defined and named
+  cCenters: circle; 0,0; d
+  cR: circle; cCenters.150; r
+  cG: circle; cCenters.30;  r
+  cB: circle; cCenters.270; r
+
+# Here, to define a point, we can produce it via some calculation condition,
+# By giving some rotating angle (the unit is degree) on a circle, we get that point
+# And please know that, the names under points/cpoints/xpoints share the same naming space,
+# i.e. they must be kept identical to each other.
+
+#cpoints:
+#  pCr: cCenters; 150
+#  pCg: cCenters; 30
+#  pCb: cCenters; 270
+
+# we not define intersection points, xpoints means Xross-points
+# by specifying two shapes, and some "directional" identifier, we get the only point
+# in the collection of intersection points. e.g. "cR; cG; s" means the "south most" point of all the
+# intersection points of "cR" and "cG"
+xpoints:
+  pRGo: cR; cG; s
+  pRGi: cR; cG; n
+  pGBo: cG; cB; e
+  pGBi: cG; cB; w
+  pBRo: cB; cR; w
+  pBRi: cB; cR; e
+
+# We can define a points collection, i.e. point series, by putting them together
+# Here, we want to mark all the intersection points of the r/g/b circles, for later markup
+# so we name this 
+pointSeries:
+  xpCircles: pRGo; pRGi; pGBo; pGBi; pBRo; pBRi
+
+# Now we start to define the "split" areas (petals) by the r/g/b circles
+# path is same concept as shape, but normally it is a compound shape, enclosed by lines and arcs
+paths:
+  ppR:
+    # to define such a complicated path, we define the three segments of arcs of its border
+    # and mark it as closed
+    - arc; pBRo; r; r;  0; ccw; large; pRGo; 
+    # ccw means the arc will go/turn in CounterClockWise, cw means ClockWise
+    - arc; pRGo; r; r;  0; cw;  small; pGBi; 
+    # large means the open angle (with respect to center) of the arc is greater than 180 deg, while small means less than
+    - arc; pGBi; r; r;  0; cw;  small; pBRo; 
+    # this keyword 'close' has no real path data, but just a mark to tell that the path should now close the previous point that is not closed
+    - close
+  ppG:
+    - arc; pRGo; r; r;  0; ccw; large; pGBo; 
+    - arc; pGBo; r; r;  0; cw;  small; pBRi; 
+    - arc; pBRi; r; r;  0; cw;  small; pRGo; 
+    - close
+  ppB:
+    - arc; pGBo; r; r;  0; ccw; large; pBRo; 
+    - arc; pBRo; r; r;  0; cw;  small; pRGi; 
+    - arc; pRGi; r; r;  0; cw;  small; pGBo; 
+    - close
+  ppRG:
+    - arc; pGBi; r; r;  0; ccw; small; pRGo; 
+    - arc; pRGo; r; r;  0; ccw; small; pBRi; 
+    - arc; pBRi; r; r;  0; cw;  small; pGBi; 
+    - close
+  ppGB:
+    - arc; pBRi; r; r;  0; ccw; small; pGBo; 
+    - arc; pGBo; r; r;  0; ccw; small; pRGi; 
+    - arc; pRGi; r; r;  0; cw;  small; pBRi; 
+    - close  
+  ppBR:
+    - arc; pRGi; r; r;  0; ccw; small; pBRo; 
+    - arc; pBRo; r; r;  0; ccw; small; pGBi; 
+    - arc; pGBi; r; r;  0; cw;  small; pRGi; 
+    - close
+  ppCenter:
+    - arc; pGBi; r; r;  0; ccw; small; pBRi; 
+    - arc; pBRi; r; r;  0; ccw; small; pRGi; 
+    - arc; pRGi; r; r;  0; ccw; small; pGBi; 
+    - close
+
+
+blocks:
+  # Since we found that we might draw these r/g/b circles in many places, we can define them all as a block,
+  # then refer and draw them in other block/layer/job
+  rgbCircles:
+    - cR; stroke; 2, #f00; fill, none;
+    - cG; stroke; 2, #0f0; fill, none;
+    - cB; stroke; 2, #00f; fill, none;
+
+  # Similarly we can merge all the petals into one block
+  petals:
+    - ppR;  fill, #f00;
+    - ppG;  fill, #0f0;
+    - ppB;  fill, #00f;
+    - ppRG; fill, #ff0;
+    - ppGB; fill, #0ff;
+    - ppBR; fill, #f0f;
+    - ppCenter; fill, #FFF;
+    - xpCircles; 4; cc
+
+# draw is actually one "job", it will be default select to preview, if you are not going to design
+# complicated shapes, structures, jobs, you can just put everything under the "draw" title. quick-and-dirty is also philosophy.
+draw:
+  - ppR;  fill, #f00;
+  - ppG;  fill, #0f0;
+  - ppB;  fill, #00f;
+  - ppRG; fill, #ff0;
+  - ppGB; fill, #0ff;
+  - ppBR; fill, #f0f;
+  - ppCenter; fill, #FFF;
+  - xpCircles; 4; cc
+
+# The drawing jobs, we can define many in a single design file, in case we want to output different version
+# or part of the design, we can use this "job" feature to output multiple works.
+jobs:
+  step1:
+    # In this draw, we just draw the three circles out, just stroke them with r/g/b colors
+    # Here, we didn't define any 'shape' or 'path' to name it and call, we just define the circles in a ad-hoc manner 
+    - circle; pCr; r ||| stroke; 2, #f00; fill, none;
+    - circle; pCg; r ||| stroke; 2, #0f0; fill, none;
+    - circle; pCb; r ||| stroke; 2, #00f; fill, none;
+
+  step3:
+    # This will draw the same three simple r/g/b circles, but it drawn by referring the pre-defined
+    # shapes, i.e. cR/cG/cB. In case we want to re-use some shape/path/block/style, etc. we can pre-define
+    # them and refer in following design.
+    - cR; stroke; 2, #f00; fill, none;
+    - cG; stroke; 2, #0f0; fill, none;
+    - cB; stroke; 2, #00f; fill, none;
+  step3b:
+    - rgbCircles
+  
+  step4:
+    # Same thing as Step3, but adding intersection points
+    - cR; stroke; 2, #f00; fill, none;
+    - cG; stroke; 2, #0f0; fill, none;
+    - cB; stroke; 2, #00f; fill, none;
+    # Here, we draw the pints, in a radius size of 4, and filled with cc,
+    # cc means "currentColor" of your browser page, 
+    # if you are not using it in a browser, please specify with formative color,
+    # such as red/orange/aqua, etc.
+    - xpCircles; 4; cc
+  
+  step4b:
+    - rgbCircles
+    - xpCircles; 4; cc
+  
+  step5:
+    - ppR;  fill, #f00;
+    - ppG;  fill, #0f0;
+    - ppB;  fill, #00f;
+    - ppRG; fill, #ff0;
+    - ppGB; fill, #0ff;
+    - ppBR; fill, #f0f;
+    - ppCenter; fill, #FFF;
+    - xpCircles; 4; cc
+
+  step5b:
+    - petals
+  
+  step6:
+    # we can add stroke/fill effects on the block, then if member of this block doesn't assign such stroke/fill effect,
+    # it will adopt this effect set on block.
+    - petals; stroke, 2, white;

@@ -1,0 +1,50 @@
+# This is the example illustrated in the docs, explaining how to draw a regular 5-angle star.
+# Page link is [https://wt-huatu.org/doc/en/dive-deep/shape-transform.html](https://wt-huatu.org/doc/en/dive-deep/shape-transform.html)
+# 这是在文档中展示的如何绘制一个标准的五角星的方法。
+# 链接地址为: [https://wt-huatu.org/doc/cn/dive-deep/shape-transform.html](https://wt-huatu.org/doc/cn/dive-deep/shape-transform.html)
+
+vars:
+  # Radius of the outer circle
+  rStar: 300
+  # Calculate inner radius
+  rStar2: rStar * dcos(72) / dcos(36)
+  rCenters: 4 * rStar
+points:
+  p0: 0,0
+
+shapes:
+  # reference circles
+  cStar:  circ; p0; rStar;
+  cStar2: circ; p0; rStar2;
+
+pointSeries:
+  # outer vertices
+  psStar:  cStar; 270 : -72 : 270 - 4 * 72
+  # inner vertices
+  psStar2: cStar2; 270 - 36 : -72 : 270 - 4 * 72 -36
+
+shapes2:
+  star: plg; psStar[1]; psStar2[1]; psStar[2]; psStar2[2];
+        psStar[3]; psStar2[3]; psStar[4]; psStar2[4];
+        psStar[5]; psStar2[5];
+  lineR1: line; p0; psStar[1];
+  lineR2: line; p0; psStar[2];
+  lineR1i: line; p0; psStar2[1];
+  lsV: line; p0; 270; rStar2 * dcos(36)
+  lsH: line; psStar2[1]; 0; rStar2 * dsin(36) * 2
+
+draw:
+  - cStar;  fill, none; stroke, 1, grey;
+  - cStar2; fill, none; stroke, 1, grey;
+  - star; fill, red, 0.4; stroke, 3, black;
+  - lineR1; stroke, 1, black;
+  - lineR2; stroke, 4, magenta;
+  - lineR1i; stroke, 4, magenta;
+  - lsV; stroke, 4, cyan;
+  - lsH; stroke, 1, yellow; dash; 3,3
+  - label; lsV.m; anchor; ml; w; 160; h; 80; ||| $ H = R_{star} \cdot \cos 72 \degree \\ = R_{star2} \cdot \cos 36\degree$
+  - label; lineR2.m; anchor; ml; w; 100; h; 80; offset; -40, -16 ||| $ R_{star}$
+  - label; lineR1i.m; anchor; ml; w; 100; h; 80; align;left; offset; -16, -28 ||| $ R_{star2}$
+  - angleMark;  psStar[1]; p0; psStar2[1];  arrow-solid; black;size;60;textSize; 12; anchor;tl;labelpos;0.6;lh;18;lw;20;showDeg;lineWidth; 2; fill; yellow;fillopacity; 0.6;
+  - angleMark;  psStar[1]; p0; psStar[2];  arrow-solid; black;size;40; textSize; 12; anchor;tl;labelpos;0.6;lh;18;lw;20;showDeg;lineWidth; 2; fill; yellow;fillopacity; 0.6;
+  - label; psStar2[1]; anchor; br; w; 200; h; 120; align;right; ||| $ R_{star2} = \frac{R_{star} \cdot \cos 72 \degree}{\cos 36\degree}  $

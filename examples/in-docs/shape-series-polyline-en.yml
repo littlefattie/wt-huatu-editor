@@ -1,0 +1,56 @@
+# This is an example demonstrating how to make **Polyline Series**.
+
+vars:
+  w: 700
+  h: 400
+
+points:
+  pFixed: w / 3, 20
+
+shapes:
+  l1: line; -w/2.4, -h/8; -74;
+  ls1: line; l1; -200; 200;
+  l2: line; -w/6, -h/6; 72;
+  ls2: line; l2; 100; -100;
+  l3: line; w/10, 0; -58;
+  ls3: line; l3; -h/3; h/2.5;
+  l4: line; w/2.1, 0; 90;
+  ls4: line; l4; -h/4; h/4;
+
+pointSeries:
+  psLs1: ls1; 0.1: 0.1: 0.9
+  psLs2: ls2; 0.1: 0.1: 0.9
+  psLs3: ls3; 0.1: 0.1: 0.9
+  psLs4: ls4; 0.1: 0.1: 0.9
+  psLs3a: ls3; 0.2, 0.3, 0.5, 0.7;
+
+shapeSeries:
+  ssPolyLines: pln; psLs1; psLs2; psLs3; pFixed; psLs4;
+  ssPolyLines2: pln; psLs1; psLs2; psLs3a; psLs4;
+blocks:
+  blkCoordinates:
+    - line; 0,0; 0; -w/2; w/2; ||| stroke, 1, grey; dash, 3,3;
+    - line; 0,0; 90; -h/2; h/2.5; ||| stroke,1, grey; dash, 3,3;
+  blkLines:
+    - ls1; stroke, 1, black;
+    - psLs1; 3; blue;
+    - ls2; stroke, 1, black;
+    - psLs2; 3; blue;
+    - ls3; stroke, 1, black;
+    - psLs3; 3; blue;
+    - ls4; stroke, 1, black;
+    - psLs4; 3; blue;
+    - circ; pFixed; 4; ||| fill, black;;
+  blkSS1:
+    - blkCoordinates
+    - blkLines;
+    - ssPolyLines; stroke,1,red; fill, none;
+    - label; psLs4[1]; offset; -10, -h/4; w; 200; h; 50; align; right; anchor; mr; ||| When some point is a single point, all the polylines in series will go through it
+  blkSS2:
+    - blkCoordinates
+    - blkLines;
+    - ssPolyLines2; stroke, 1, green; fill, none;  
+    - label; psLs4[1]; offset; -10, -h/4; w; 240; h; 50; align; right; anchor; mr; ||| When all are point series, count of polylines will be equal to the least count of point series
+draw:
+  - blkSS1
+  - blkSS2;move; 0, h;

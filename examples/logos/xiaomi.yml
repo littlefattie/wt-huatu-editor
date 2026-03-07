@@ -1,0 +1,173 @@
+
+# Some simulation for XIAOMI's logo
+
+# --- Vars ------
+vars:
+  r: 100
+  k: 0.7832014026242661
+  lC: k * r
+  h: r * 0.766
+  w1: r * 0.188
+  w2: r * 0.147
+  w: w1 * 4 + w2 * 3
+  xH1: -w / 2
+  xH2: xH1 + w1
+  xH3: xH2 + w2
+  xH4: xH3 + w1
+  xH5: xH4 + w2
+  xH6: xH5 + w1
+  xH7: xH6 + w2
+  xH8: xH7 + w1
+  yV1: -h/2
+  yV2: yV1 + w2 * 1.1
+  yV3: yV2 + w2
+  yV4:  h/2
+
+# --- Points ------
+points:
+  #pC1: (0, 0)
+  #pC2: (b, 0)
+
+# --- Shapes ------
+shapes:
+  lrHu: line; xH1 - 10, yV1; xH8 + 10, yV1;
+  lrHd: line; xH1 - 10, yV4; xH8 + 10, yV4;
+  lrH1: line; xH2 - 5,  yV2; xH5 + 5, yV2;
+  lrH2: line; xH3 - 5,  yV3; xH6 + 5, yV3;
+  lrV1: line; xH1, yV1 - 10; xH1, yV4 + 10;
+  lrV2: line; xH2, yV2 - 10; xH2, yV4 + 10;
+  lrV3: line; xH3, yV3 - 10; xH3, yV4 + 10;
+  lrV4: line; xH4, yV1 - 10; xH4, yV4 + 10;
+  lrV5: line; xH5, yV2 - 10; xH5, yV4 + 10;
+  lrV6: line; xH6, yV1 - 10; xH6, yV4 + 10;
+  lrV7: line; xH7, yV1 - 10; xH7, yV4 + 10;
+  lrV8: line; xH8, yV1 - 10; xH8, yV4 + 10;  
+
+xpoints:
+  xpS1_1: lrHu; lrV1;
+  xpS1_2: lrHu; lrV6;
+  xpS1_3: lrHd; lrV6;
+  xpS1_4: lrHd; lrV5;
+  xpS1_5: lrH1; lrV5;
+  xpS1_6: lrH1; lrV2;
+  xpS1_7: lrHd; lrV2;
+  xpS1_8: lrHd; lrV1;
+  xpS2_1: lrH2; lrV3;
+  xpS2_2: lrH2; lrV4;
+  xpS2_3: lrHd; lrV4;
+  xpS2_4: lrHd; lrV3;
+  xpS3_1: lrHu; lrV7;
+  xpS3_2: lrHu; lrV8; 
+  xpS3_3: lrHd; lrV8;
+  xpS3_4: lrHd; lrV7;
+  xpA1:   lrHu; lrV4;
+  xpA2:   lrH1; lrV4;
+  xpA3:   lrH2; lrV5;
+  xpA4:   lrH2; lrV6;
+
+points2:
+  pTurn1: xpA1.x - w1 * 0.2, xpA1.y
+  pTurn2: xpA4.x, xpA4.y + w1 * 0.2
+  pTurn3: xpA3.x, xpA3.y + w1 * 0.15
+  pTurn4: xpA2.x - w1 * 0.3, xpA2.y
+
+shapes2:
+  shape1: plg; xpS1_1; xpS1_2; xpS1_3; xpS1_4; xpS1_5; xpS1_6; xpS1_7; xpS1_8;
+  shape2: plg; xpS2_1; xpS2_2; xpS2_3; xpS2_4;
+  shape3: plg; xpS3_1; xpS3_2; xpS3_3; xpS3_4;
+  linePart1: line; pTurn2; xpS1_3; xpS1_4; pTurn3;
+  linePart2: line; pTurn4; xpS1_6; xpS1_7;  xpS1_8;xpS1_1; pTurn1;
+
+paths:
+  outline:
+    - b3; r, 0; r, -lC; lC, -r; 0, -r;
+    - b3; 0, -r; -lC, -r; -r, -lC; -r, 0;
+    - b3; -r, 0; -r, lC; -lC, r; 0, r; 
+    - b3; 0, r; lC, r; r, lC; r, 0;
+    - close
+  shape1Curved:
+    - line; xpS1_1; pTurn1;
+    - b3; pTurn1; pTurn1.x   + w2 * 1.2, pTurn1.y; pTurn2.x, pTurn2.y - w1 * 2; pTurn2;
+    - line; pTurn2; xpS1_3;
+    - line; xpS1_3; xpS1_4; 
+    - line; xpS1_4; pTurn3;
+    - b3; pTurn3; pTurn3.x, pTurn3.y - w2 * 1.2; pTurn4.x + w2 * 0.9, pTurn4.y; pTurn4;
+    - line; pTurn4; xpS1_6; 
+    - line; xpS1_6; xpS1_7;
+    - line; xpS1_7; xpS1_8;
+    - close 
+  hollowOut:
+    - ...linePart2; radius; 1.25
+    - b3; pTurn1; pTurn1.x   + w2 * 1.2, pTurn1.y; pTurn2.x, pTurn2.y - w1 * 2; pTurn2;
+    - ...linePart1; radius; 1.25
+    - b3; pTurn3; pTurn3.x, pTurn3.y - w2 * 1.2; pTurn4.x + w2 * 0.9, pTurn4.y; pTurn4;
+    - close
+  sophisticated:
+    - ...outline
+    - ...hollowOut
+    - ...shape2; radius; 1.25
+    - ...shape3; radius; 1.25
+
+blocks:
+  refLines:
+    - lrHu
+    - lrHd
+    - lrH1
+    - lrH2
+    - lrV1
+    - lrV2
+    - lrV3
+    - lrV4
+    - lrV5
+    - lrV6
+    - lrV7
+    - lrV8
+  barsNoRadius:
+    - shape1; 
+    - shape2;  
+    - shape3; 
+  barsWithRadius:
+    - shape1; fill, green; radius; 1.25, 12, 1.25, 1.25, 12, 1.25
+    - shape2; fill, blue; radius; 1.25
+    - shape3; fill, maroon; radius; 1.25
+  turnPoints:
+    - circ; pTurn1; 2; ||| fill, white;
+    - circ; pTurn2; 2; ||| fill, white;
+    - circ; pTurn3; 2; ||| fill, white;
+    - circ; pTurn4; 2; ||| fill, white;
+  barsPrecisse:
+    - hollowOut #shape1Curved
+    - shape2;radius; 1.25
+    - shape3;radius; 1.25
+  
+
+# --- Draw --------
+draw:
+  - outline; fill, #777; stroke, #ff6900, 0.3
+  #- label; 0,0; width; 200; height; 200; anchor; center; align;center;fontsize; 120; color; white ||| MI
+  - barsNoRadius; fill, grey
+  - refLines; stroke, 0.5, aqua; fill, none;
+  - circ; xpA1; 2; ||| fill, white;
+  - circ; xpA2; 2; ||| fill, white;
+  - circ; xpA3; 2; ||| fill, white;
+  - circ; xpA4; 2; ||| fill, white;
+
+jobs:
+  cleaned:
+    - outline; fill, #ff6900
+    #- barsNoRadius; fill, grey, 0.4
+    - barsWithRadius; opaque, 0.4
+    - shape1Curved; fill, red, 0.8
+  pure:
+    - outline; fill, #ff6900
+    - barsPrecisse; fill, white
+  carLogo:
+    - outline; fill, #777; stroke, 2, #333
+    - barsPrecisse; fill, #222
+  testSegmentsExpanding:
+    - outline; fill, #777
+    - hollowOut; fill, white
+    - refLines; stroke, 0.2, aqua; fill, none;
+  hollowOutVersion:
+    - sophisticated; fill, #ff6900;
+  

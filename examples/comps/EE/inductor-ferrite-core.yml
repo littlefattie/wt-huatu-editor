@@ -1,0 +1,106 @@
+# This is the commonly used Inductor (with ferrite coil) symbol in EE schematics, You can adjust
+# the color or dimension as your requirements.
+
+# 电子电路电路图中常用的电感符号（带铁氧体磁芯的），你可以按照你自己的需要调整相关尺寸或颜色
+
+# --- Input Vars ------
+inputVars:
+  lineWidth: 4
+  color: cc
+  dsn: L?
+  value: 1uH
+
+# --- Vars ------
+vars:
+  sw: $lineWidth
+  wAll: sw * 28
+  wBody: sw * 20
+  hBody: sw * 3.6
+  wGate: wBody / 5
+  xL: -wBody / 2 - sw / 2
+  xR:  wBody / 2 + sw / 2
+  lGap: sw * 1.414
+  wSegTotal: xR - xL - 4 * lGap
+  wSeg: wSegTotal / 5
+  xG1L: xL + wSeg
+  xG1R: xG1L + lGap
+  xG2L: xG1R + wSeg
+  xG2R: xG2L + lGap
+  xG3L: xG2R + wSeg
+  xG3R: xG3L + lGap
+  xG4L: xG3R + wSeg
+  xG4R: xG4L + lGap
+  yCore: -hBody - sw*1
+  yCore2: yCore - sw * 1.72
+
+# --- Points ------
+points:
+  p0: (0, 0)
+  p1: -wAll / 2, 0
+  p2:  wAll / 2, 0
+  pL3: -wGate * 2.5, 0
+  pL2: -wGate * 1.5, 0
+  pL1: -wGate * 0.5, 0
+  pR1:  wGate * 0.5, 0
+  pR2:  wGate * 1.5, 0
+  pR3:  wGate * 2.5, 0
+  pL3C: pL3.x, pL3.y - hBody
+  pL2C: pL2.x, pL2.y - hBody
+  pL1C: pL1.x, pL1.y - hBody
+  pR1C: pR1.x, pR1.y - hBody
+  pR2C: pR2.x, pR2.y - hBody
+  pR3C: pR3.x, pR3.y - hBody
+
+# --- Shapes ------
+shapes:
+  handL: line; p1; pL3;
+  b3GateL2: b3; pL3; pL3C; pL2C; pL2;
+  b3GateL1: b3; pL2; pL2C; pL1C; pL1;
+  b3GateM:  b3; pL1; pL1C; pR1C; pR1;
+  b3GateR1: b3; pR1; pR1C; pR2C; pR2;
+  b3GateR2: b3; pR2; pR2C; pR3C; pR3;
+  handR: line; pR3; p2;
+  seg11: line; xL,   yCore; xG1L, yCore;
+  seg12: line; xG1R, yCore; xG2L, yCore;
+  seg13: line; xG2R, yCore; xG3L, yCore;
+  seg14: line; xG3R, yCore; xG4L, yCore;
+  seg15: line; xG4R, yCore; xR,   yCore;
+  seg21: line; xL,   yCore2; xG1L, yCore2;
+  seg22: line; xG1R, yCore2; xG2L, yCore2;
+  seg23: line; xG2R, yCore2; xG3L, yCore2;
+  seg24: line; xG3R, yCore2; xG4L, yCore2;
+  seg25: line; xG4R, yCore2; xR,   yCore2;
+  
+
+paths:
+  bars:
+    - handL
+    - b3GateL2
+    - b3GateL1
+    - b3GateM
+    - b3GateR1
+    - b3GateR2
+    - handR
+  coreLines:
+    - seg11
+    - seg12
+    - seg13
+    - seg14
+    - seg15
+    - seg21
+    - seg22
+    - seg23
+    - seg24
+    - seg25
+
+
+# --- Draw --------
+draw:
+  - bars; stroke, $color, sw; linecap; round; linejoin; round; fill, none;
+  - coreLines; stroke, $color, sw;;  fill, none;
+  - label; at;0, yCore2; offset; 0, -2; anchor; bm; w; sw * 8; h; 24;  ||| $dsn
+  - label; at;p0; offset; 0,  2; anchor; tm; w; wAll * 0.96; h; 24;   ||| $value
+
+ports:
+  - 1; p1; -180; 0
+  - 2; p2;    0; 0

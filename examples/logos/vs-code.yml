@@ -1,0 +1,108 @@
+# Some code to simulate the designing of VS Code's logo
+
+# --- Vars ------
+vars: 
+  degRup: -150
+  degRdown: 150
+  degLup1: -36
+  degLdown1: 36
+  degLup2: degLup1 - 5
+  degLdown2: degLdown1 + 5
+  degLup3: -45
+  degLdown3: 50
+  wVbar: 60
+  lCenterTri: wVbar * 1.5
+  hCenterTri: lCenterTri * dsin(60)
+  kDl1: 1.0
+  kDl2: 3
+  kDr: 2
+
+# --- Points ------
+points:
+  pX0: (0, 0)
+  pXr1: wVbar, pX0.y
+  pXr2: pXr1.x + hCenterTri * kDr, pX0.y
+  pxl1: pX0.x - hCenterTri, pX0.y
+  pxl2: pxl1.x - hCenterTri * kDl1, pX0.y
+  pxl3: pX0.x - hCenterTri * kDl2, pX0.y
+
+# --- Shapes ------
+shapes:
+  lV1: line; pX0; 90;
+  lV2: line; pXr1; 90;
+  lRu: line; pXr2; degRup;
+  lRd: line; pXr2; degRdown
+  lL1up: line; pxl1; degLup1;
+  lL1down: line; pxl1; degLdown1;
+  lL2up: line; pxl2; degLup2
+  lL2down: line; pxl2; degLdown2
+  lL3up: line; pxl3; degLup3
+  lL3down: line; pxl3; degLdown3
+  lsV1: line; lV1; -lCenterTri * 0.75; lCenterTri * 0.75
+  lsV2: line; lV2; -lCenterTri * 1.2; lCenterTri * 1.2
+  # The reference lines
+  lsRu: line; lRu; -30; 300
+  lsRd: line; lRd; -30; 300
+  lsL1U: line; lL1up; -10; 120
+  lsL1D: line; lL1down; -10; 120
+  lsL2U: line; lL2up; -90; 210
+  lsL2D: line; lL2down; -90; 210
+  lsL3U: line; lL3up; -10; 100
+  lsL3D: line; lL3down; -10; 100
+  
+xpoints:
+  pxTriUp: lL1up; lV1;
+  pxTriDown: lL1down; lV1;
+  pxV2U: lRu; lV2;
+  pxV2D: lRd; lV2;
+  pxTop: lL2up; lRu
+  pxDown: lL2down; lRd
+  px2Up: lL2up; lL1down
+  px2Down: lL2down; lL1up
+  px3Up1: lL3up; lL2down
+  px3Up2: lL3up; lL1down
+  px3Down1: lL3down; lL2up
+  px3Down2: lL3down; lL1up
+
+shapes2:
+  plgOut: plg; px3Up1; px3Up2; px2Up; 
+               pxTop; pxV2U; pxV2D; 
+               pxDown; px2Down;
+               px3Down2; px3Down1; pxl2
+  centerTri: plg; pxl1; pxTriDown; pxTriUp
+
+paths:
+  logo:
+    - ...plgOut;radius; 12,12,0, 20,3,3,20,0,12,12,0
+    - ...centerTri
+  logoNoCorner:
+    - ...plgOut
+    - ...centerTri
+  logo2: move; logo; 0, 300
+  logo3: move; logo; 300, 0
+  logo4: move; logo; 300, 300
+
+blocks:
+  refLines:
+    - lsV1
+    - lsV2
+    - lsRu
+    - lsRd
+    - lsL1U
+    - lsL1D
+    - lsL2U
+    - lsL2D
+    - lsL3U
+    - lsL3D
+    - line; pX0; 0; -300; 300; ||| stroke; 0.5, red; dash; 2 3;
+  
+# --- Draw --------
+draw:
+  - logo; fill, cc;
+  - logo2; fill,red;
+  - logo3; fill,green;
+  - logo4; fill,darkgrey;
+jobs:
+  noCorner:
+    - logoNoCorner
+    - refLines; stroke, 1,aqua; fill, none;

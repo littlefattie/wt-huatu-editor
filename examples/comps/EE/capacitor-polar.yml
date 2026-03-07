@@ -1,0 +1,54 @@
+# This is the commonly used Capacitor symbol in EE schematics, You can adjust
+# the color or dimension as your requirements.
+
+# 电子电路电路图中常用的电容符号（无极性），你可以按照你自己的需要调整相关尺寸或颜色
+
+# --- Input Vars ------
+inputVars:
+  lineWidth: 4
+  color: cc
+  dsn: C?
+  value: 10uF
+
+# --- Vars ------
+vars:
+  sw: $lineWidth
+  wBar: sw * 7
+  dBar: sw * 3
+  hAll: sw * 16
+
+# --- Points ------
+points:
+  p0: (0, 0)
+  p1: 0, -hAll / 2
+  p2: 0,  hAll / 2
+  pBar1: 0, -dBar / 2
+  pBar2: 0,  dBar / 2
+  pArcL: -wBar/2, dBar/2 * 1.3
+  pArcR:  wBar/2, dBar/2 * 1.3
+  pArcCtrl: 0, -dBar/2 * 0.5
+
+# --- Shapes ------
+shapes:
+  handU: line; p1; pBar1;
+  #handD: line; p2; pBar2;
+  barPlus:  line; -wBar/2, -dBar/2;  wBar/2, -dBar/2;
+  arcMinus: b2; pArcL; pArcCtrl; pArcR;
+shapes2:
+  handD: line; p2; arcMinus.m
+paths:
+  bars:
+    - handU
+    - handD
+    - barPlus
+    - arcMinus
+
+# --- Draw --------
+draw:
+  - bars; stroke, $color, sw; linecap; round; linejoin; round; fill, none;
+  - label; at;-wBar/2, 0; offset; -6,0; anchor; mr; w; sw * 10; h; 24; align; right;  ||| $dsn
+  - label; at; wBar/2, 0; offset;  6,0; anchor; ml; w; sw * 14; h; 24; align;left;   ||| $value
+
+ports:
+  - p; p1; 270; 0
+  - m; p2;  90; 0
