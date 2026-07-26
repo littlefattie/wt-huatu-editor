@@ -8,4 +8,6 @@ The **Second** tab on the left bar will present you a lot of examples using this
 
 Just have a try if you are interested. 👉 [https://littlefattie.github.io/wt-huatu-editor/](https://littlefattie.github.io/wt-huatu-editor/)
 
+Now a electron-based desktop editor is developed, please download it from the release menu, or this direct link 👉 [https://github.com/littlefattie/wt-huatu-editor/releases/download/v1.4.8/wt-huatu-editor-1.4.8.Setup.exe](https://github.com/littlefattie/wt-huatu-editor/releases/download/v1.4.8/wt-huatu-editor-1.4.8.Setup.exe)
+
 Thanks.
